@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="referrer" content="no-referrer">
+<meta name="description" content="Explora historias ramificadas, conserva tus decisiones y regresa a cualquier mundo posible.">
+<title>Multiversos · Mundos que nacen de una decisión</title>
+<style>
+:root{--bg:#0c101c;--surface:#131a2a;--surface2:#192236;--line:#29344b;--text:#eef2fc;--muted:#a6b3cc;--mint:#a8eed4;--violet:#bbadff;--red:#ffb6bb;--amber:#f2d092;--radius:20px;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:var(--bg);font-synthesis:none}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% 0%,#25243f80,transparent 48%),var(--bg);min-height:100vh}button,input,textarea,select{font:inherit}button,a,input,select,textarea,summary{-webkit-tap-highlight-color:transparent}button,a,summary{touch-action:manipulation}button{cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}button,input,textarea,select{border-radius:11px}button{border:1px solid var(--line);color:var(--text);background:var(--surface2);padding:10px 14px;min-height:44px;font-size:.86rem;font-weight:600;transition:background .15s,border-color .15s}button:hover:not(:disabled){background:#25314a;border-color:#6c7d9e}button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--mint);outline-offset:3px}a{color:var(--mint)}input,textarea,select{width:100%;color:var(--text);background:#0e1524;border:1px solid #35405a;padding:11px 12px;min-height:45px}textarea{resize:vertical;line-height:1.65;min-height:155px}input::placeholder,textarea::placeholder{color:#8292ad}select{padding-right:28px}input:disabled,textarea:disabled,select:disabled{opacity:.65}label{display:block;font-size:.82rem;font-weight:650;margin:0 0 9px}.field{margin-top:20px}.hint{font-size:.76rem;color:var(--muted);line-height:1.6;margin:8px 0 0}.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.between{justify-content:space-between}.grow{flex:1;min-width:0}.muted{color:var(--muted)}.small{font-size:.8rem}.eyebrow{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;font-weight:750;color:var(--mint)}.primary{background:var(--mint);color:#10251e;border-color:var(--mint)}.primary:hover:not(:disabled){background:#cbffe9;border-color:#cbffe9}.quiet{background:transparent}.danger{color:var(--red)}.full{width:100%}.pill{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);padding:6px 10px;border-radius:999px;font-size:.72rem;white-space:nowrap;color:var(--muted)}.pill .dot{width:6px;height:6px;background:var(--mint);border-radius:50%}[hidden]{display:none!important}.shell{max-width:1450px;margin:auto;padding:0 36px 40px}.topbar{min-height:90px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:14px}.brand{display:flex;gap:12px;align-items:center;font-size:1.25rem;font-weight:750;letter-spacing:-.04em}.brand small{font-size:.65rem;color:var(--muted);letter-spacing:.1em;border-left:1px solid var(--line);padding-left:12px;font-weight:500}.logo{position:relative;width:30px;height:30px;border:1px solid var(--mint);border-radius:50%;transform:rotate(-35deg)}.logo:before{content:"";position:absolute;inset:7px -6px;border:1px solid var(--violet);border-radius:50%}.logo:after{content:"";position:absolute;width:6px;height:6px;border-radius:50%;background:var(--mint);top:3px;left:6px}.intro{padding:34px 0 31px;display:flex;align-items:center;justify-content:space-between;gap:28px}.intro h1{font-weight:550;font-size:clamp(1.85rem,3vw,2.7rem);letter-spacing:-.055em;line-height:1.12;margin:10px 0 14px}.intro h1 span{color:var(--mint)}.intro p{color:var(--muted);font-size:.91rem;line-height:1.7;margin:0;max-width:610px}.intro-mark{flex:none;position:relative;width:165px;height:110px;margin-right:45px;opacity:.65}.orbit{position:absolute;border:1px solid #9bc6c475;border-radius:50%;inset:10px;transform:rotate(-28deg)}.orbit:nth-child(2){inset:20px -4px;transform:rotate(35deg);border-color:#b1a0ff80}.orbit:nth-child(3){inset:-1px 45px;transform:rotate(48deg)}.orbit:after{content:"";width:6px;height:6px;border-radius:50%;background:var(--mint);position:absolute;top:13px;left:12px}.layout{display:grid;grid-template-columns:340px minmax(0,1fr);gap:25px;align-items:start}.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:23px}.panel h2{font-size:1rem;letter-spacing:-.02em;margin:0}.world-tools{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}.world-tools button{flex:1;padding:8px 6px;min-height:36px;font-size:.72rem}.divider{height:1px;background:var(--line);margin:23px 0}.section-label{display:flex;align-items:center;gap:9px;font-size:.75rem;font-weight:650;letter-spacing:.04em;color:var(--muted);margin-bottom:19px}.section-number{border:1px solid #43516b;border-radius:50%;width:23px;height:23px;display:inline-flex;justify-content:center;align-items:center;font-size:.66rem;color:var(--mint)}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.generate{margin-top:22px;width:100%;font-size:.9rem;padding:14px}.connection{margin-top:18px;border-top:1px solid var(--line);padding-top:16px}.connection summary,.map summary,.help-fold summary{cursor:pointer;font-size:.81rem;color:var(--muted);padding:6px 0}.connection .field{margin-top:14px}.key-row{display:flex;gap:8px}.key-row input{min-width:0}.key-row button{padding:8px;font-size:.72rem}.mode-note{margin-top:12px;color:var(--amber);font-size:.75rem;line-height:1.5}.sidebar-bottom{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:15px}.sidebar-bottom button{font-size:.76rem}.workspace{min-width:0}.workspace-heading{display:flex;justify-content:space-between;align-items:start;gap:16px;margin:2px 0 18px}.workspace-heading h2{font-size:1.4rem;letter-spacing:-.035em;margin:7px 0 5px;overflow-wrap:anywhere}.workspace-heading .meta{font-size:.76rem;color:var(--muted)}.route{padding:16px 19px;background:#141d2e;border:1px solid var(--line);border-radius:14px;margin-bottom:19px}.route-label{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:11px}.breadcrumbs{display:flex;align-items:center;gap:7px;flex-wrap:wrap}.breadcrumbs button{font-size:.73rem;padding:7px 10px;min-height:33px;max-width:220px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden}.breadcrumbs button[aria-current="step"]{color:var(--mint);border-color:#679986;background:#203a35}.chevron{color:#7585a4;font-size:.7rem}.current-state{font-size:.87rem;line-height:1.7;white-space:pre-wrap;margin:13px 0 0;color:#c6d0e4;overflow-wrap:anywhere}.current-state strong{color:var(--mint)}.current-state details{margin-top:9px}.map{margin-top:13px;border-top:1px solid var(--line);padding-top:7px}.map ol{list-style:none;padding:0;margin:8px 0;max-height:340px;overflow:auto}.map li{margin:6px 0;border-left:1px solid #44516b;padding-left:12px}.map button{min-height:34px;font-size:.75rem;text-align:left;max-width:100%;overflow-wrap:anywhere}.map button[aria-current="step"]{border-color:var(--mint);color:var(--mint)}.map .level{font-size:.64rem;color:var(--muted);margin-right:7px}.results-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:23px 0 13px}.results-heading h3{font-size:.92rem;font-weight:650;margin:0}.results-heading p{margin:5px 0 0;font-size:.73rem;color:var(--muted)}.results-heading select{max-width:210px;font-size:.75rem;min-height:38px}.summary{padding:17px 19px;background:#171e30;border:1px solid var(--line);border-radius:13px;font-size:.85rem;line-height:1.7;color:#c5d0e5;margin-bottom:15px;white-space:pre-wrap;overflow-wrap:anywhere}.summary strong{color:var(--text);font-size:.74rem;display:block;margin-bottom:4px;letter-spacing:.05em}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{--accent:var(--mint);border:1px solid var(--line);border-radius:17px;background:linear-gradient(130deg,#182335,#131a2a 65%);padding:21px;display:flex;flex-direction:column;min-width:0;position:relative;overflow:hidden}.card:before{content:"";position:absolute;top:0;left:21px;width:40px;height:2px;background:var(--accent)}.card:nth-child(4n+2){--accent:var(--violet)}.card:nth-child(4n+3){--accent:#9dcafa}.card:nth-child(4n+4){--accent:var(--amber)}.card-top{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:14px}.branch-no{font-size:.7rem;font-weight:750;color:var(--accent);letter-spacing:.1em}.likelihood{font-size:.66rem;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:4px 7px}.card h4{font-size:1.05rem;line-height:1.4;letter-spacing:-.025em;margin:0 0 11px;overflow-wrap:anywhere}.description{font-size:.82rem;color:var(--muted);line-height:1.7;white-space:pre-wrap;margin:0 0 15px;overflow-wrap:anywhere}.outcome{border-left:2px solid var(--accent);padding:0 0 0 13px;font-size:.82rem;line-height:1.6;color:#d8e0ef;margin-bottom:20px;white-space:pre-wrap;overflow-wrap:anywhere}.outcome small{display:block;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:5px}.metrics{display:grid;gap:10px;margin-top:auto}.metric-label{display:flex;justify-content:space-between;font-size:.7rem;color:#b7c5dc;margin-bottom:6px;gap:8px;overflow-wrap:anywhere}.metric-label span:last-child{flex:none;font-variant-numeric:tabular-nums}.metric-track{height:4px;border-radius:10px;background:#2b354a;overflow:hidden}.metric-fill{height:100%;background:var(--accent);border-radius:10px}.chronology{margin:17px 0;color:var(--muted);font-size:.75rem;line-height:1.6}.chronology summary{cursor:pointer;padding:5px 0}.chronology ol{padding-left:19px;margin-bottom:0;overflow-wrap:anywhere}.chronology li{padding:3px 0}.choose{width:100%;border-color:#43546a;background:#24333b;color:var(--accent);font-size:.8rem;margin-top:3px}.empty{display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;min-height:405px;border:1px dashed #3d4a63;border-radius:20px;padding:40px 24px;background:radial-gradient(ellipse at center,#26344555,transparent 65%)}.empty .empty-symbol{font-size:2.8rem;color:var(--mint);font-weight:200;line-height:1;margin:0 0 20px}.empty h3{font-size:1.3rem;font-weight:500;letter-spacing:-.03em;margin:0 0 12px}.empty p{max-width:370px;font-size:.87rem;line-height:1.8;color:var(--muted);margin:0 0 22px}.empty .hint{font-size:.72rem;margin-top:13px}.loading{padding:22px;border:1px solid #6a7298;border-radius:14px;background:#222842;margin-bottom:17px;display:flex;gap:15px;align-items:center}.spinner{width:23px;height:23px;border:2px solid #4c5875;border-top-color:var(--mint);border-radius:50%;animation:spin 1s linear infinite;flex:none}.loading strong{font-size:.85rem}.loading p{margin:5px 0 0;font-size:.74rem;color:var(--muted)}@keyframes spin{to{transform:rotate(360deg)}}.notice{padding:13px 16px;background:#243f36;border:1px solid #4b826a;border-radius:12px;font-size:.8rem;line-height:1.6;margin-bottom:16px;overflow-wrap:anywhere}.notice.error{background:#39272f;border-color:#885767;color:#ffd4d6}.notice.warn{background:#352e25;border-color:#7c6644;color:#ffe0aa}.storage-buttons{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}.status{font-size:.72rem;color:var(--muted);display:flex;align-items:center;gap:6px}.status:before{content:"";width:5px;height:5px;border-radius:50%;background:var(--mint)}.status.problem{color:var(--amber)}.status.problem:before{background:var(--amber)}footer{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-top:27px;color:#91a1bd;font-size:.71rem;line-height:1.6}dialog{border:1px solid #4d5d7a;border-radius:20px;background:var(--surface);color:var(--text);padding:27px;max-width:550px;width:calc(100% - 32px);box-shadow:0 30px 100px #0008}dialog::backdrop{background:#050917c9;backdrop-filter:blur(4px)}dialog h2{margin:0 0 14px;font-size:1.3rem;letter-spacing:-.035em}dialog p,dialog li{font-size:.88rem;line-height:1.8;color:#bac7df}dialog ol{padding-left:22px}.dialog-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:23px}.help-fold{border-top:1px solid var(--line);padding-top:10px;margin-top:15px}.help-fold ul{padding-left:18px}.help-fold code{font-size:.76rem;color:var(--mint)}.skip-link{position:fixed;left:16px;top:-70px;background:var(--mint);color:#10251e;padding:12px;z-index:99}.skip-link:focus{top:12px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(min-width:1250px){.layout{grid-template-columns:355px minmax(0,1fr);gap:30px}.card{padding:24px}}
+@media(max-width:1050px){.shell{padding:0 22px 30px}.layout{grid-template-columns:310px minmax(0,1fr);gap:20px}.panel{padding:20px}.cards{grid-template-columns:1fr}.intro-mark{margin-right:10px;width:120px}}
+@media(max-width:760px){.shell{padding:0 16px 25px}.topbar{min-height:73px}.brand{font-size:1.12rem}.brand small{display:none}.topbar .pill{display:none}.intro{padding:26px 0}.intro-mark{display:none}.intro h1{font-size:2.15rem}.intro p{font-size:.85rem}.layout{grid-template-columns:1fr;gap:28px}.panel{padding:21px}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.workspace-heading{margin-top:0}.empty{min-height:300px}.intro .eyebrow{font-size:.63rem}.results-heading{align-items:start}footer{align-items:start;flex-direction:column;gap:5px}}
+@media(max-width:530px){.cards{grid-template-columns:1fr}.workspace-heading{flex-wrap:wrap}.results-heading{flex-wrap:wrap}.results-heading select{max-width:100%}.brand{gap:10px}.topbar button{font-size:.75rem}.breadcrumbs button{max-width:180px}.intro h1{font-size:2rem}.card{padding:22px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#workspace">Ir a los caminos</a>
+<div class="shell">
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true"></span>multiversos <small>ESTUDIO DE POSIBILIDADES</small></div>
+    <div class="row"><span class="pill"><span class="dot"></span>Tu próxima historia empieza aquí</span><button id="helpBtn" class="quiet" type="button">Cómo funciona</button></div>
+  </header>
+  <section class="intro" aria-labelledby="pageTitle">
+    <div><div class="eyebrow">Imagina · Decide · Explora</div><h1 id="pageTitle">Cada decisión<br>abre <span>un mundo.</span></h1><p>Crea escenarios, sigue sus consecuencias y vuelve a cualquier punto para descubrir lo que pudo haber sido.</p></div>
+    <div class="intro-mark" aria-hidden="true"><i class="orbit"></i><i class="orbit"></i><i class="orbit"></i></div>
+  </section>
+  <div id="storageNotice" class="notice warn" role="status" hidden><span id="storageMessage"></span><div class="storage-buttons"><button id="saveRescueBtn" type="button">Descargar mi trabajo actual</button><button id="recoverRawBtn" type="button" hidden>Descargar datos anteriores</button><button id="reloadSavedBtn" type="button" hidden>Cargar versión guardada</button><button id="retrySaveBtn" type="button">Reintentar guardado</button></div></div>
+  <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+  <div class="layout">
+    <aside>
+      <div class="panel">
+        <div class="section-label"><span class="section-number">01</span>TU MUNDO</div>
+        <label for="caseSelector" class="sr-only">Mundo activo</label><select id="caseSelector"></select>
+        <div class="world-tools"><button id="newBtn" type="button">＋ Nuevo</button><button id="renameBtn" type="button">Renombrar</button><button id="duplicateBtn" type="button">Duplicar</button><button id="deleteBtn" type="button" class="danger">Eliminar</button></div>
+        <div class="divider"></div>
+        <form id="generatorForm">
+          <div class="section-label"><span class="section-number">02</span>EL PUNTO DE INFLEXIÓN</div>
+          <label id="scenarioLabel" for="scenario">¿Cómo empieza tu historia?</label>
+          <textarea id="scenario" maxlength="8000" placeholder="Una archivista recibe una carta escrita por ella misma, fechada veinte años en el futuro…" aria-describedby="scenarioHint"></textarea>
+          <div class="row between hint"><span id="scenarioHint">Describe el escenario y a sus protagonistas.</span><span id="charCount">0 / 8000</span></div>
+          <div class="field"><label for="variables">¿Qué quieres observar?</label><input id="variables" type="text" maxlength="250" placeholder="Tensión, recursos, confianza" value="Tensión, recursos, confianza" aria-describedby="variablesHint"><p id="variablesHint" class="hint">Hasta 6 indicadores separados por comas. Escala de 0 a 100.</p></div>
+          <div class="two"><div class="field"><label for="numBranches">Caminos</label><select id="numBranches"><option value="3">3 caminos</option><option value="4" selected>4 caminos</option><option value="5">5 caminos</option></select></div><div class="field"><label for="tone">Estilo</label><select id="tone"><option value="equilibrado">Equilibrado</option><option value="realista">Realista</option><option value="fantasia">Fantasía</option><option value="suspenso">Suspenso</option></select></div></div>
+          <div class="field"><label for="mode">Generar con</label><select id="mode"><option value="gemini">Gemini · inteligencia artificial</option><option value="demo">Demostración · sin conexión</option></select></div>
+          <details id="connection" class="connection" open><summary>Conexión con Gemini</summary><div class="field"><label for="apiKey">Tu clave de API</label><div class="key-row"><input id="apiKey" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Pega tu clave aquí" aria-describedby="keyHint"><button id="revealKeyBtn" type="button" aria-pressed="false">Mostrar</button></div><p class="hint" id="keyHint">Solo se conserva mientras esta página esté abierta. No se incluye en los respaldos.</p><div class="row between hint"><a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer">Obtener una clave</a><button id="forgetKeyBtn" type="button" class="quiet">Olvidar clave</button></div></div><div class="field"><label for="model">Modelo de Gemini</label><input id="model" type="text" list="modelList" value="gemini-3.5-flash-lite" maxlength="100" autocapitalize="off" spellcheck="false"><datalist id="modelList"><option value="gemini-3.5-flash-lite"><option value="gemini-3.8-flash"><option value="gemini-2.5-flash"><option value="gemini-flash-latest"></datalist><p class="hint">Usa un modelo de texto disponible para tu cuenta. El servicio puede tener costos y límites.</p></div></details>
+          <p id="demoNote" class="mode-note" hidden>Demostración con plantillas: permite probar las ramas, pero no genera historias con IA.</p>
+          <button id="generateBtn" class="primary generate" type="submit">Explorar caminos <span aria-hidden="true">↗</span></button>
+          <button id="cancelBtn" class="quiet full" type="button" hidden style="margin-top:10px">Cancelar generación</button>
+        </form>
+        <div class="divider"></div>
+        <div class="row between"><span id="saveStatus" class="status" aria-live="polite">Listo</span><button id="resetBtn" class="quiet danger" type="button" style="font-size:.72rem;min-height:32px;padding:6px">Reiniciar mundo</button></div>
+        <div class="sidebar-bottom"><button id="exportBtn" type="button">↓ Respaldo JSON</button><button id="importBtn" type="button">↑ Importar respaldo</button></div>
+        <input id="fileInput" type="file" accept=".json,application/json" hidden>
+      </div>
+    </aside>
+    <main id="workspace" class="workspace" tabindex="-1">
+      <div class="workspace-heading"><div><div class="eyebrow">Mesa de exploración</div><h2 id="currentCaseTitle">Mi primer mundo</h2><div id="worldStats" class="meta">0 decisiones · 0 caminos guardados</div></div><button id="exportStoryBtn" class="quiet" type="button">↓ Descargar historia</button></div>
+      <div id="routePanel" class="route"><div class="route-label">Estás aquí</div><nav id="breadcrumbs" class="breadcrumbs" aria-label="Decisiones de la ruta actual"></nav><div id="currentState" class="current-state"></div><details id="mapPanel" class="map" hidden><summary id="mapTitle">Ver todas las ramas</summary><ol id="mapList" aria-label="Mapa de ramas"></ol></details></div>
+      <div id="loading" class="loading" role="status" hidden><div class="spinner" aria-hidden="true"></div><div><strong>Explorando futuros posibles…</strong><p id="loadingText">Conectando con Gemini.</p></div></div>
+      <section id="results" aria-label="Caminos posibles" aria-busy="false"><div class="results-heading"><div><h3 id="resultsTitle">Futuros posibles</h3><p>Posibilidades narrativas, no predicciones comprobadas.</p></div><div id="generationPicker" hidden><label class="sr-only" for="generationSelector">Exploración guardada</label><select id="generationSelector"></select></div></div><div id="output"></div></section>
+    </main>
+  </div>
+  <footer><span>Multiversos 2.0 · Tus mundos se guardan en este navegador.</span><span>Regresa al origen para explorar otra decisión. Descarga respaldos para llevarlos contigo.</span></footer>
+</div>
+<dialog id="actionDialog" aria-labelledby="dialogTitle"><form id="dialogForm"><h2 id="dialogTitle"></h2><p id="dialogText"></p><label id="dialogLabel" for="dialogInput">Nombre del mundo</label><input id="dialogInput" maxlength="90" autocomplete="off"><div class="dialog-actions"><button id="dialogCancel" type="button" class="quiet">Cancelar</button><button id="dialogConfirm" type="submit" class="primary">Guardar</button></div></form></dialog>
+<dialog id="helpDialog" aria-labelledby="helpTitle"><h2 id="helpTitle">Un inicio. Muchos destinos.</h2><ol><li>Crea un mundo y describe su situación inicial.</li><li>Elige tus indicadores y el número de caminos. Con Gemini, introduce tu propia clave; para probar la interfaz, selecciona Demostración.</li><li>Explora una opción y elige <strong>Seguir este camino</strong>. Escribe tu próximo movimiento.</li><li>Vuelve a una decisión desde la ruta o el mapa. Las otras ramas permanecen guardadas.</li><li>Descarga un respaldo JSON de todos tus mundos o una historia TXT de la ruta actual. Importar añade copias sin borrar lo que ya tienes.</li></ol><p>El guardado depende del navegador y del lugar donde abras el archivo. Al cambiar de dispositivo, de navegador o de ubicación, usa un respaldo.</p><details class="help-fold"><summary>Qué se mejoró en esta versión</summary><ul><li>Escenario, acciones, consecuencias, cronología e indicadores conservados en cada rama.</li><li>Borradores por decisión, autoguardado y recuperación de respaldos de la versión original.</li><li>Texto de IA y archivos tratados como texto, sin ejecutarlos como HTML.</li><li>Validación de datos, control de respuestas tardías, cancelación y reintentos limitados.</li><li>La clave viaja en la cabecera <code>x-goog-api-key</code> y no se guarda con los mundos.</li></ul><p>Esta edición está pensada para uso personal con tu propia clave. Para publicar un servicio con una clave compartida, la conexión debe pasar por un servidor. <a href="https://ai.google.dev/gemini-api/docs/api-key" target="_blank" rel="noopener noreferrer">Guía de Google</a>.</p><p>API: <a href="https://ai.google.dev/api/generate-content" target="_blank" rel="noopener noreferrer">generateContent</a> · <a href="https://ai.google.dev/gemini-api/docs/models" target="_blank" rel="noopener noreferrer">Modelos disponibles</a>.</p></details><div class="dialog-actions"><button id="closeHelpBtn" class="primary" type="button">Entendido</button></div></dialog>
+<script>
+/* Multiversos 2.0 — archivo autónomo, sin dependencias.
+ * Modelo: cada mundo tiene nodos y generaciones. Los nodos apuntan al padre y a
+ * la generación que los produjo; las generaciones conservan todas sus opciones.
+ * activeId selecciona la ruta, nunca borra las rutas alternativas.
+ * Entradas externas: normalizeState / validateResult; salida: DOM textContent.
+ * Credenciales: únicamente en memoria, fuera de state y de toda exportación.
+ */
+(() => {
+'use strict';
+const STORE = 'multiversos_v2';
+const LEGACY_STORE = 'multiverse_saved_cases';
+const VERSION = 2;
+const MAX_CASES = 60, MAX_NODES = 1500, MAX_TOTAL_NODES = 5000;
+const MAX_FILE = 12 * 1024 * 1024, MAX_TEXT = 8000;
+const DEFAULT_MODEL = 'gemini-3.5-flash-lite';
+const DEFAULT_VARIABLES = 'Tensión, recursos, confianza';
+const EXAMPLE = 'Una archivista encuentra una carta escrita por ella misma, fechada veinte años en el futuro. La carta le pide que no abra la puerta del observatorio esta noche, pero su hermano acaba de entrar allí. Nadie más recuerda que ese edificio exista.';
+const $ = id => document.getElementById(id);
+const uid = () => globalThis.crypto?.randomUUID?.() || 'm-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2) + '-' + Math.random().toString(36).slice(2);
+const now = () => new Date().toISOString();
+const clone = value => JSON.parse(JSON.stringify(value));
+const folded = value => value.normalize('NFD').replace(/[̀-ͯ]/g, '').toLocaleLowerCase('es').trim();
+const clip = (value, n = 90) => value.length > n ? value.slice(0, n - 1) + '…' : value;
+const sources = ['gemini','demo','legacy'];
+const tones = ['equilibrado','realista','fantasia','suspenso'];
+let state, request = null, saveTimer = null, lastStored = null, storageLock = '', damagedRaw = null, viewGeneration = null, dialogResolve = null;
+
+function el(tag, className, text) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text !== undefined) node.textContent = text;
+  return node;
+}
+function button(text, onClick, className = 'quiet') {
+  const b = el('button', className, text); b.type = 'button'; b.addEventListener('click', onClick); return b;
+}
+function notify(message, kind = 'success') {
+  const n = $('notice'); n.textContent = message; n.className = 'notice' + (kind === 'success' ? '' : ' ' + kind); n.hidden = false;
+}
+function clearNotice() { $('notice').hidden = true; }
+function fail(message) { throw new Error(message); }
+function record(value, label) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) fail(label + ': estructura incorrecta.');
+  return value;
+}
+function str(value, label, max = MAX_TEXT, empty = false) {
+  if (typeof value !== 'string' || value.length > max || (!empty && !value.trim())) fail(label + ': texto ausente o demasiado largo.');
+  return value;
+}
+function arr(value, label, max, min = 0) {
+  if (!Array.isArray(value) || value.length < min || value.length > max) fail(label + ': cantidad no válida.');
+  return value;
+}
+function id(value) { return str(value, 'Identificador', 150); }
+function date(value) {
+  if (typeof value !== 'string' || value.length > 40 || !Number.isFinite(Date.parse(value))) fail('Fecha no válida.');
+  return value;
+}
+function source(value) { if (!sources.includes(value)) fail('Origen de rama no válido.'); return value; }
+function score(value) {
+  if (!Number.isInteger(value) || value < 0 || value > 100) fail('Cada indicador debe ser un entero entre 0 y 100.');
+  return value;
+}
+function likelihood(value) { if (!['alta','media','baja'].includes(value)) fail('Plausibilidad no válida.'); return value; }
+function parseVariables(text) {
+  const result = text.split(',').map(v => v.trim()).filter(Boolean);
+  if (!result.length) return DEFAULT_VARIABLES.split(',').map(v => v.trim());
+  if (result.length > 6 || result.some(v => v.length > 35)) fail('Usa hasta 6 indicadores, con un máximo de 35 caracteres por nombre.');
+  if (new Set(result.map(folded)).size !== result.length) fail('Los nombres de los indicadores no deben repetirse.');
+  return result;
+}
+function makeCase(name = 'Mi primer mundo') {
+  return {id:uid(), name, createdAt:now(), updatedAt:now(), rootDraft:'', activeId:null,
+    settings:{variables:DEFAULT_VARIABLES, branches:4, tone:'equilibrado'}, nodes:[], generations:[]};
+}
+function makeState() {
+  const c = makeCase();
+  return {schemaVersion:VERSION, currentId:c.id, preferences:{mode:'gemini', model:DEFAULT_MODEL}, cases:[c]};
+}
+function currentCase() { return state.cases.find(c => c.id === state.currentId); }
+function activeNode(c = currentCase()) { return c.nodes.find(n => n.id === c.activeId) || null; }
+function pathFor(c, active = c.activeId) {
+  const map = new Map(c.nodes.map(n => [n.id,n]));
+  const path = []; const seen = new Set();
+  while (active !== null) {
+    if (seen.has(active) || !map.has(active)) fail('La ruta contiene una referencia incorrecta.');
+    seen.add(active); const n = map.get(active); path.push(n); active = n.parentId;
+  }
+  return path.reverse();
+}
+
+// Construir objetos nuevos evita copiar propiedades ajenas o prototipos del JSON.
+function normalizeState(raw) {
+  record(raw, 'Respaldo');
+  if (raw.schemaVersion === undefined) return migrateLegacy(raw);
+  if (raw.schemaVersion !== VERSION) fail('Este respaldo pertenece a una versión no compatible.');
+  const items = arr(raw.cases, 'Mundos', MAX_CASES, 1);
+  let totalNodes = 0;
+  const cases = items.map(rawCase => {
+    const c = record(rawCase, 'Mundo'); const settings = record(c.settings, 'Opciones');
+    if (![3,4,5].includes(settings.branches) || !tones.includes(settings.tone)) fail('Opciones del mundo no válidas.');
+    const out = {id:id(c.id), name:str(c.name,'Nombre',90), createdAt:date(c.createdAt), updatedAt:date(c.updatedAt),
+      rootDraft:str(c.rootDraft,'Borrador',MAX_TEXT,true), activeId:c.activeId === null ? null : id(c.activeId),
+      settings:{variables:str(settings.variables,'Variables',250,true), branches:settings.branches, tone:settings.tone}, nodes:[], generations:[]};
+    out.nodes = arr(c.nodes,'Ramas',MAX_NODES).map(rawNode => {
+      const n = record(rawNode,'Rama');
+      const indicators = arr(n.indicators,'Indicadores',6).map(rawMetric => {
+        const m = record(rawMetric,'Indicador'); return {name:str(m.name,'Indicador',35), value:score(m.value)};
+      });
+      if (new Set(indicators.map(m=>folded(m.name))).size !== indicators.length) fail('Indicadores duplicados.');
+      return {id:id(n.id), parentId:n.parentId === null ? null : id(n.parentId), generationId:id(n.generationId),
+        action:str(n.action,'Acción',1000), description:str(n.description,'Desarrollo',MAX_TEXT,true), outcome:str(n.outcome,'Desenlace'),
+        likelihood:likelihood(n.likelihood), indicators, timeline:arr(n.timeline,'Cronología',12).map(t=>str(t,'Momento',1000)),
+        source:source(n.source), createdAt:date(n.createdAt), draft:str(n.draft,'Borrador',MAX_TEXT,true), visited:n.visited === true};
+    });
+    out.generations = arr(c.generations,'Exploraciones',MAX_NODES).map(rawGeneration => {
+      const g = record(rawGeneration,'Exploración');
+      return {id:id(g.id), parentId:g.parentId === null ? null : id(g.parentId), prompt:str(g.prompt,'Escenario',MAX_TEXT,true),
+        summary:str(g.summary,'Resumen',MAX_TEXT,true), source:source(g.source), createdAt:date(g.createdAt),
+        branches:arr(g.branches,'Opciones de exploración',5,1).map(id)};
+    });
+    const nodeMap = new Map(out.nodes.map(n=>[n.id,n])); const genMap = new Map(out.generations.map(g=>[g.id,g]));
+    if (nodeMap.size !== out.nodes.length || genMap.size !== out.generations.length) fail('El respaldo contiene identificadores duplicados.');
+    if (out.activeId !== null && !nodeMap.has(out.activeId)) fail('El punto activo no existe.');
+    const linked = new Set();
+    for (const g of out.generations) {
+      if (g.parentId !== null && !nodeMap.has(g.parentId)) fail('Exploración sin origen válido.');
+      for (const child of g.branches) {
+        const n = nodeMap.get(child);
+        if (!n || n.generationId !== g.id || n.parentId !== g.parentId || n.source !== g.source || linked.has(child)) fail('La estructura de ramas está dañada.');
+        linked.add(child);
+      }
+    }
+    if (linked.size !== out.nodes.length) fail('Existen ramas sin exploración.');
+    const checked = new Set();
+    for (const n of out.nodes) {
+      const chain = new Set(); let cursor = n;
+      while (cursor && !checked.has(cursor.id)) {
+        if (chain.has(cursor.id)) fail('El respaldo contiene un ciclo entre ramas.');
+        chain.add(cursor.id);
+        if (cursor.parentId !== null && !nodeMap.has(cursor.parentId)) fail('Una rama no tiene un origen válido.');
+        cursor = cursor.parentId === null ? null : nodeMap.get(cursor.parentId);
+      }
+      for (const key of chain) checked.add(key);
+    }
+    totalNodes += out.nodes.length;
+    if (totalNodes > MAX_TOTAL_NODES) fail('El respaldo tiene demasiadas ramas. Divide tus mundos en varios archivos.');
+    return out;
+  });
+  if (new Set(cases.map(c=>c.id)).size !== cases.length) fail('El respaldo contiene mundos duplicados.');
+  const preferences = raw.preferences && typeof raw.preferences === 'object' ? raw.preferences : {};
+  return {schemaVersion:VERSION, currentId:cases.some(c=>c.id === raw.currentId) ? raw.currentId : cases[0].id,
+    preferences:{mode:preferences.mode === 'demo' ? 'demo' : 'gemini', model:typeof preferences.model === 'string' && /^[a-zA-Z0-9._-]{1,100}$/.test(preferences.model) ? preferences.model : DEFAULT_MODEL}, cases};
+}
+
+function migrateLegacy(raw) {
+  const oldCases = arr(raw.cases,'Casos del respaldo original',MAX_CASES,1);
+  const cases = oldCases.map(item => {
+    const old = record(item,'Caso original');
+    const c = makeCase(str(old.name,'Nombre',90));
+    c.id = typeof old.id === 'string' && old.id.length && old.id.length <= 150 ? old.id : uid();
+    for (const h of arr(old.history,'Historial original',MAX_NODES)) {
+      record(h,'Paso del historial');
+      const g = {id:uid(),parentId:c.activeId,prompt:'',summary:'Historia recuperada. El formato original no conservaba el escenario completo.',source:'legacy',createdAt:now(),branches:[]};
+      const n = {id:uid(),parentId:c.activeId,generationId:g.id,action:str(h.action,'Acción original',1000),description:'',outcome:str(h.outcome,'Desenlace original'),likelihood:'media',indicators:[],timeline:[],source:'legacy',createdAt:now(),draft:'',visited:true};
+      g.branches.push(n.id); c.generations.push(g); c.nodes.push(n); c.activeId = n.id;
+    }
+    return c;
+  });
+  return normalizeState({schemaVersion:VERSION,currentId:raw.currentId,preferences:{mode:'gemini',model:DEFAULT_MODEL},cases});
+}
+
+function showStorageProblem(message) {
+  $('storageNotice').hidden = false; $('storageMessage').textContent = message;
+  $('saveStatus').textContent = 'Cambios sin guardar'; $('saveStatus').classList.add('problem');
+  $('recoverRawBtn').hidden = damagedRaw === null;
+  $('reloadSavedBtn').hidden = storageLock !== 'conflict';
+  $('retrySaveBtn').textContent = storageLock === 'corrupt' ? 'Reiniciar guardado' : 'Reintentar guardado';
+  $('retrySaveBtn').hidden = storageLock === 'conflict';
+}
+function persist() {
+  clearTimeout(saveTimer); saveTimer = null;
+  if (storageLock) return false;
+  try {
+    const existing = localStorage.getItem(STORE);
+    if (existing !== lastStored) {
+      storageLock = 'conflict'; showStorageProblem('Otra pestaña cambió tus mundos. Descarga tu trabajo actual antes de cargar la versión guardada.'); return false;
+    }
+    const text = JSON.stringify(state);
+    localStorage.setItem(STORE,text); lastStored = text;
+    $('saveStatus').textContent = 'Guardado en este navegador'; $('saveStatus').classList.remove('problem'); $('storageNotice').hidden = true;
+    return true;
+  } catch {
+    showStorageProblem('No se pudo guardar en este navegador: puede faltar espacio o estar bloqueado el almacenamiento. Tu trabajo sigue en esta página; descarga un respaldo.');
+    return false;
+  }
+}
+function scheduleSave() {
+  currentCase().updatedAt = now();
+  if (!storageLock) $('saveStatus').textContent = 'Guardando…';
+  clearTimeout(saveTimer); saveTimer = setTimeout(persist,400);
+}
+function flush() { if (saveTimer !== null) persist(); }
+function load() {
+  let raw = null;
+  try {
+    lastStored = localStorage.getItem(STORE);
+    raw = lastStored ?? localStorage.getItem(LEGACY_STORE);
+    state = raw === null ? makeState() : normalizeState(JSON.parse(raw));
+    if (raw !== null && lastStored === null) notify('Se recuperaron tus casos anteriores. Conservamos lo que estaba guardado; el código original no almacenaba todos los detalles.','warn');
+  } catch {
+    state = makeState();
+    if (raw !== null) {
+      damagedRaw = raw; storageLock = 'corrupt';
+      showStorageProblem('Los datos anteriores no se pudieron leer. No se sobrescribirán. Puedes descargarlos para recuperarlos o reiniciar el guardado.');
+    } else showStorageProblem('El guardado del navegador no está disponible. Puedes trabajar y descargar respaldos.');
+  }
+  // Un error al retirar una clave antigua nunca debe invalidar los mundos leídos.
+  try {
+    const oldKey = localStorage.getItem('geminiApiKey');
+    if (oldKey) { $('apiKey').value = oldKey; localStorage.removeItem('geminiApiKey'); }
+  } catch {
+    notify('No se pudo retirar una clave guardada por la versión anterior. Usa Olvidar clave o borra ese dato desde tu navegador.','warn');
+  }
+  render();
+  if (!storageLock) persist();
+}
+
+function ask({title,text = '',value = '',confirm = 'Guardar',input = false,danger = false}) {
+  $('dialogTitle').textContent = title; $('dialogText').textContent = text;
+  $('dialogInput').hidden = !input; $('dialogLabel').hidden = !input; $('dialogInput').value = value; $('dialogInput').required = input;
+  $('dialogConfirm').textContent = confirm; $('dialogConfirm').className = danger ? 'danger' : 'primary';
+  $('actionDialog').showModal();
+  queueMicrotask(()=>input ? $('dialogInput').focus() : $('dialogCancel').focus());
+  return new Promise(resolve => { dialogResolve = resolve; });
+}
+function finishDialog(value) {
+  $('actionDialog').close();
+  const resolve = dialogResolve; dialogResolve = null; resolve?.(value);
+}
+function cancelRequest(showMessage = false) {
+  if (!request) return;
+  const previous = request; request = null; previous.controller.abort(); clearTimeout(previous.timeout); setBusy(false);
+  if (showMessage) notify('Generación cancelada. Tu borrador y los caminos anteriores siguen guardados.');
+}
+function selectCase(caseId) {
+  flush(); cancelRequest(); if (!state.cases.some(c=>c.id === caseId)) return;
+  state.currentId = caseId; viewGeneration = null; clearNotice(); persist(); render();
+}
+function visitNode(nodeId) {
+  const c = currentCase(); if (nodeId !== null && !c.nodes.some(n=>n.id === nodeId)) return;
+  flush(); cancelRequest(); c.activeId = nodeId;
+  const node = activeNode(); if (node) node.visited = true;
+  c.updatedAt = now(); viewGeneration = null; clearNotice(); persist(); render();
+  if (window.matchMedia('(max-width:760px)').matches) $('scenario').scrollIntoView({block:'center',behavior:'auto'});
+  $('scenario').focus({preventScroll:true});
+}
+function rekeyCase(c, name) {
+  const copy = clone(c); const ids = new Map(copy.nodes.map(n=>[n.id,uid()])); const gids = new Map(copy.generations.map(g=>[g.id,uid()]));
+  copy.id = uid(); copy.name = name; copy.createdAt = now(); copy.updatedAt = now(); copy.activeId = copy.activeId === null ? null : ids.get(copy.activeId);
+  for (const n of copy.nodes) { n.id = ids.get(n.id); n.parentId = n.parentId === null ? null : ids.get(n.parentId); n.generationId = gids.get(n.generationId); }
+  for (const g of copy.generations) { g.id = gids.get(g.id); g.parentId = g.parentId === null ? null : ids.get(g.parentId); g.branches = g.branches.map(key=>ids.get(key)); }
+  return copy;
+}
+function totalNodes() { return state.cases.reduce((n,c)=>n+c.nodes.length,0); }
+function roomForWorld(nodes = 0) {
+  if (state.cases.length >= MAX_CASES || totalNodes() + nodes > MAX_TOTAL_NODES) { notify('Se alcanzó el límite de mundos o ramas. Descarga un respaldo y elimina un mundo que ya no uses.','warn'); return false; }
+  return true;
+}
+
+function setBusy(busy) {
+  for (const key of ['scenario','variables','numBranches','tone','mode','model','generateBtn']) $(key).disabled = busy;
+  $('cancelBtn').hidden = !busy; $('loading').hidden = !busy; $('results').setAttribute('aria-busy',String(busy));
+  $('generateBtn').textContent = busy ? 'Explorando…' : (state?.preferences.mode === 'demo' ? 'Generar demostración ↗' : 'Explorar caminos ↗');
+}
+function renderMode() {
+  const demo = state.preferences.mode === 'demo'; $('connection').hidden = demo; $('demoNote').hidden = !demo;
+  if (!request) $('generateBtn').textContent = demo ? 'Generar demostración ↗' : 'Explorar caminos ↗';
+}
+function render() {
+  const c = currentCase(); $('caseSelector').replaceChildren();
+  for (const world of state.cases) { const option = el('option','',world.name); option.value = world.id; $('caseSelector').append(option); }
+  $('caseSelector').value = c.id; $('currentCaseTitle').textContent = c.name;
+  const n = activeNode(c); const path = pathFor(c);
+  $('scenario').value = n ? n.draft : c.rootDraft;
+  $('scenarioLabel').textContent = n ? '¿Cuál es tu próximo movimiento?' : '¿Cómo empieza tu historia?';
+  $('scenarioHint').textContent = n ? 'Continúa desde el desenlace elegido.' : 'Describe el escenario y a sus protagonistas.';
+  $('scenario').placeholder = n ? 'Escribe qué intenta hacer ahora tu protagonista…' : 'Una archivista recibe una carta escrita por ella misma, fechada veinte años en el futuro…';
+  $('charCount').textContent = $('scenario').value.length + ' / 8000';
+  $('variables').value = c.settings.variables; $('numBranches').value = c.settings.branches; $('tone').value = c.settings.tone;
+  $('mode').value = state.preferences.mode; $('model').value = state.preferences.model;
+  $('worldStats').textContent = path.length + (path.length === 1 ? ' decisión' : ' decisiones') + ' en esta ruta · ' + c.nodes.length + ' caminos guardados';
+  renderMode(); renderRoute(c,path); renderResults(); setBusy(Boolean(request));
+}
+function renderRoute(c,path) {
+  const nav = $('breadcrumbs'); nav.replaceChildren();
+  const origin = button('Origen',()=>visitNode(null)); if (c.activeId === null) origin.setAttribute('aria-current','step'); nav.append(origin);
+  path.forEach((n,index)=> {
+    nav.append(el('span','chevron','›'));
+    const b = button((index+1) + '. ' + clip(n.action,45),()=>visitNode(n.id)); b.title = n.action;
+    if (n.id === c.activeId) b.setAttribute('aria-current','step'); nav.append(b);
+  });
+  const box = $('currentState'); box.replaceChildren();
+  const n = activeNode(c);
+  if (n) {
+    box.append(el('strong','','Situación actual: '),document.createTextNode(n.outcome));
+    if (n.source === 'demo') box.append(el('p','hint','Esta rama procede de la demostración con plantillas.'));
+    if (n.source === 'legacy') box.append(el('p','hint','Paso recuperado: el respaldo antiguo solo conservaba la acción y el desenlace.'));
+    const detail = el('details'); detail.append(el('summary','','Ver contexto de esta decisión'));
+    const g = c.generations.find(g=>g.id === n.generationId);
+    detail.append(el('p','hint','Tu entrada: ' + (g.prompt || 'No disponible en el respaldo original.')));
+    if (n.description) detail.append(el('p','hint',n.description)); box.append(detail);
+  } else box.append(el('span','muted', c.nodes.length ? 'Elige una opción guardada o genera una nueva exploración desde el origen.' : 'Tu historia todavía puede ir en cualquier dirección.'));
+  $('mapPanel').hidden = !c.nodes.length; $('mapTitle').textContent = 'Ver mapa · ' + c.nodes.length + ' caminos';
+  const list = $('mapList'); list.replaceChildren();
+  const children = new Map();
+  for (const node of c.nodes) { if (!children.has(node.parentId)) children.set(node.parentId,[]); children.get(node.parentId).push(node); }
+  const stack = (children.get(null)||[]).map(node=>({node,depth:1})).reverse();
+  while (stack.length) {
+    const {node,depth} = stack.pop(); const li = el('li'); li.style.marginLeft = Math.min(depth-1,4)*12 + 'px';
+    const b = button('',()=>visitNode(node.id)); b.append(el('span','level','Paso '+depth),document.createTextNode(clip(node.action,100)));
+    if (node.id === c.activeId) b.setAttribute('aria-current','step');
+    b.title = node.action; li.append(b); list.append(li);
+    for (const child of [...(children.get(node.id)||[])].reverse()) stack.push({node:child,depth:depth+1});
+  }
+}
+function renderResults() {
+  const c = currentCase(); const generations = c.generations.filter(g=>g.parentId === c.activeId);
+  const output = $('output'); output.replaceChildren();
+  $('generationPicker').hidden = generations.length < 2;
+  const select = $('generationSelector'); select.replaceChildren();
+  generations.forEach((g,i)=> { const o = el('option','', 'Exploración '+(i+1)+' · '+clip(g.prompt || 'Recuperada',35)); o.value=g.id; select.append(o); });
+  const selected = generations.find(g=>g.id === viewGeneration) || generations.at(-1);
+  viewGeneration = selected?.id || null; if (selected) select.value = selected.id;
+  $('resultsTitle').textContent = selected ? selected.branches.length + ' caminos por descubrir' : 'Futuros posibles';
+  if (!selected) {
+    const empty = el('div','empty'); empty.append(el('div','empty-symbol','✧'));
+    empty.append(el('h3','',c.activeId ? 'El siguiente capítulo es tuyo.' : '¿Y si las cosas fueran diferentes?'));
+    empty.append(el('p','',c.activeId ? 'Escribe el próximo movimiento de tu protagonista. Exploraremos sus consecuencias sin olvidar cómo llegó hasta aquí.' : 'Escribe una situación para explorar sus posibles destinos. También puedes probar un mundo de ejemplo sin una clave de API.'));
+    if (!c.activeId) { empty.append(button('Probar una demostración ↗',startDemo,'primary')); empty.append(el('div','hint','Ejemplo con plantillas · sin internet · sin IA')); }
+    else empty.append(button('Escribir el próximo movimiento',()=>{$('scenario').focus();$('scenario').scrollIntoView({block:'center',behavior:'auto'});},'primary'));
+    output.append(empty); return;
+  }
+  const summary = el('div','summary'); summary.append(el('strong','',selected.source === 'demo' ? 'DEMOSTRACIÓN · SIN IA' : selected.source === 'legacy' ? 'HISTORIA RECUPERADA' : 'EL ESCENARIO DE ESTA EXPLORACIÓN'));
+  summary.append(document.createTextNode(selected.summary));
+  const promptDetails = el('details','hint'); promptDetails.append(el('summary','','Ver tu entrada'),el('p','',selected.prompt || 'El respaldo original no la conservaba.')); summary.append(promptDetails); output.append(summary);
+  const grid = el('div','cards'); const nodeMap = new Map(c.nodes.map(n=>[n.id,n]));
+  selected.branches.forEach((nodeId,index)=> {
+    const n = nodeMap.get(nodeId); const card = el('article','card');
+    const top = el('div','card-top'); top.append(el('span','branch-no','CAMINO '+String(index+1).padStart(2,'0')));
+    if (n.source !== 'legacy') top.append(el('span','likelihood','Plausibilidad '+n.likelihood));
+    card.append(top,el('h4','',n.action));
+    if (n.description) card.append(el('p','description',n.description));
+    const outcome = el('div','outcome'); outcome.append(el('small','','Desenlace'),document.createTextNode(n.outcome)); card.append(outcome);
+    const metrics = el('div','metrics');
+    for (const m of n.indicators) {
+      const metric = el('div'); const labels = el('div','metric-label'); labels.append(el('span','',m.name),el('span','',m.value+' / 100'));
+      const track = el('div','metric-track'); track.setAttribute('role','meter'); track.setAttribute('aria-label',m.name); track.setAttribute('aria-valuemin','0'); track.setAttribute('aria-valuemax','100'); track.setAttribute('aria-valuenow',String(m.value));
+      const fill = el('div','metric-fill'); fill.style.width = m.value+'%'; track.append(fill); metric.append(labels,track); metrics.append(metric);
+    }
+    card.append(metrics);
+    if (n.timeline.length) {
+      const timeline = el('details','chronology'); timeline.append(el('summary','','Cronología · '+n.timeline.length+' momentos'));
+      const list = el('ol'); n.timeline.forEach(t=>list.append(el('li','',t))); timeline.append(list); card.append(timeline);
+    }
+    card.append(button(n.visited ? 'Volver a este camino ↗' : 'Seguir este camino ↗',()=>visitNode(n.id),'choose')); grid.append(card);
+  });
+  output.append(grid);
+}
+
+// El esquema guía a Gemini; validateResult es la frontera real de confianza.
+function responseSchema(variables,count) {
+  const string = {type:'STRING'};
+  return {type:'OBJECT',properties:{resumen_contexto:string,ramas:{type:'ARRAY',minItems:count,maxItems:count,items:{type:'OBJECT',properties:{
+    accion:string,descripcion:string,desenlace:string,probabilidad:{type:'STRING',enum:['alta','media','baja']},
+    indicadores:{type:'ARRAY',minItems:variables.length,maxItems:variables.length,items:{type:'OBJECT',properties:{nombre:{type:'STRING',enum:variables},valor:{type:'INTEGER',minimum:0,maximum:100}},required:['nombre','valor']}},
+    timeline:{type:'ARRAY',minItems:1,maxItems:6,items:string}
+  },required:['accion','descripcion','desenlace','probabilidad','indicadores','timeline']}}},required:['resumen_contexto','ramas']};
+}
+function validateResult(raw,variables,count) {
+  record(raw,'Respuesta');
+  const branches = arr(raw.ramas,'Caminos recibidos',count,count).map(item=> {
+    record(item,'Camino'); const metrics = arr(item.indicadores,'Indicadores recibidos',variables.length,variables.length);
+    const seen = new Map();
+    for (const metric of metrics) {
+      record(metric,'Indicador recibido'); const name = str(metric.nombre,'Indicador',35); const key = folded(name);
+      if (!variables.some(v=>folded(v)===key) || seen.has(key)) fail('Gemini devolvió indicadores distintos o repetidos. Intenta generar otra vez.');
+      seen.set(key,score(metric.valor));
+    }
+    return {action:str(item.accion,'Acción',1000),description:str(item.descripcion,'Desarrollo'),outcome:str(item.desenlace,'Desenlace'),
+      likelihood:likelihood(item.probabilidad),indicators:variables.map(name=>({name,value:seen.get(folded(name))})),
+      timeline:arr(item.timeline,'Cronología',6,1).map(t=>str(t,'Momento',1000))};
+  });
+  return {summary:str(raw.resumen_contexto,'Resumen'),branches};
+}
+function buildPrompt(c,input,variables,count) {
+  const history = pathFor(c).map(n=> {
+    const g = c.generations.find(g=>g.id === n.generationId);
+    return {entrada_del_usuario:g.prompt || '(No conservada en el respaldo original)',decision:n.action,desarrollo:n.description,desenlace:n.outcome,indicadores:n.indicators,cronologia:n.timeline};
+  });
+  const context = {historia_confirmada:history,nueva_entrada:input,indicadores:variables,cantidad_de_caminos:count,estilo:c.settings.tone};
+  const text = 'Desarrolla exactamente '+count+' caminos distintos a partir de estos datos narrativos. La nueva entrada describe el escenario o la acción que se intenta. Cada camino propone una acción o reacción concreta, un desarrollo y un desenlace abierto a continuación. Respeta todos los hechos confirmados; no mezcles alternativas no elegidas. Los indicadores representan estados finales en una escala de 0 a 100 (no porcentajes estadísticos). Usa exactamente los nombres de indicadores indicados, una vez cada uno por camino. La probabilidad alta/media/baja expresa plausibilidad narrativa, no certeza real. Devuelve de 1 a 6 momentos de cronología por camino, sin fechas inventadas si no hay referencia temporal. Mantén cada desarrollo y desenlace conciso.\n\nDATOS:\n'+JSON.stringify(context);
+  if (text.length > 120000) fail('Esta ruta excede el contexto de esta edición (120 000 caracteres). Exporta la historia y crea un nuevo mundo con un resumen para continuar.');
+  return text;
+}
+function abortableDelay(ms,signal) {
+  return new Promise((resolve,reject)=> {
+    if (signal.aborted) { reject(signal.reason || new DOMException('Cancelado','AbortError')); return; }
+    const abort = ()=>{clearTimeout(timer);reject(signal.reason || new DOMException('Cancelado','AbortError'));};
+    const timer = setTimeout(()=>{signal.removeEventListener('abort',abort);resolve();},ms);
+    signal.addEventListener('abort',abort,{once:true});
+  });
+}
+class HttpError extends Error { constructor(status,retryAfter) { super('HTTP '+status); this.status=status; this.retryAfter=retryAfter; } }
+function httpMessage(error) {
+  if (error.status === 400) return 'Gemini rechazó la solicitud (400). Revisa la clave y que el modelo admita respuestas JSON estructuradas.';
+  if ([401,403].includes(error.status)) return 'Gemini no autorizó la solicitud ('+error.status+'). Revisa tu clave, permisos y restricciones en Google AI Studio.';
+  if (error.status === 404) return 'Ese modelo no está disponible (404). Cambia el nombre del modelo por uno habilitado en tu cuenta.';
+  if (error.status === 429) return 'Se alcanzó un límite de uso (429). Revisa la cuota de tu proyecto o espera antes de volver a intentar.';
+  if (error.status >= 500) return 'Gemini está temporalmente ocupado ('+error.status+'). Tus datos siguen guardados; vuelve a intentar más tarde.';
+  if (error.status) return 'La solicitud falló (HTTP '+error.status+'). Tus caminos anteriores permanecen intactos.';
+  if (error instanceof TypeError) return 'No se pudo conectar con Gemini. Revisa internet y las restricciones de tu clave. Si el navegador bloquea archivos locales, abre esta página desde un servidor local.';
+  return error.message || 'No se pudo generar la respuesta.';
+}
+function retryMilliseconds(header) {
+  if (!header) return 0;
+  const seconds = Number(header);
+  if (Number.isFinite(seconds)) return Math.max(0,seconds*1000);
+  const timestamp = Date.parse(header); return Number.isFinite(timestamp) ? Math.max(0,timestamp-Date.now()) : 0;
+}
+async function fetchGemini(payload,key,model,op) {
+  const url = 'https://generativelanguage.googleapis.com/v1beta/models/'+encodeURIComponent(model)+':generateContent';
+  const transient = new Set([408,429,500,502,503,504]);
+  for (let attempt=0;attempt<3;attempt++) {
+    try {
+      const response = await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':key},body:JSON.stringify(payload),signal:op.controller.signal,credentials:'omit',referrerPolicy:'no-referrer'});
+      if (!response.ok) { const retryAfter=retryMilliseconds(response.headers.get('Retry-After')); await response.body?.cancel(); throw new HttpError(response.status,retryAfter); }
+      const text = await response.text();
+      if (text.length > 800000) fail('La respuesta es demasiado grande. Reduce el número de caminos.');
+      let data; try { data=JSON.parse(text); } catch { fail('Gemini devolvió una respuesta ilegible. Intenta otra vez.'); }
+      if (data.promptFeedback?.blockReason) fail('Gemini no pudo responder a este escenario. Revisa su redacción. No se modificó tu historia.');
+      const candidate = data.candidates?.[0];
+      if (!candidate) fail('Gemini no devolvió ningún camino. Intenta reformular el escenario.');
+      if (candidate.finishReason === 'MAX_TOKENS') fail('La respuesta quedó incompleta por el límite de salida. Prueba con 3 caminos o una entrada más breve.');
+      if (candidate.finishReason && candidate.finishReason !== 'STOP') fail('Gemini detuvo la respuesta ('+String(candidate.finishReason).slice(0,60)+'). No se modificó tu historia.');
+      const content = candidate.content?.parts?.filter(p=>!p.thought && typeof p.text === 'string').map(p=>p.text).join('').trim();
+      if (!content) fail('Gemini devolvió una respuesta vacía. Intenta otra vez.');
+      try { return JSON.parse(content); } catch { fail('La respuesta no tiene el JSON esperado. Tus caminos anteriores siguen guardados.'); }
+    } catch (error) {
+      if (op.controller.signal.aborted) throw op.controller.signal.reason || error;
+      const retry = error instanceof TypeError || transient.has(error.status);
+      const delay = Math.max(error.retryAfter || 0,1000*2**attempt + Math.floor(Math.random()*250));
+      if (!retry || attempt === 2 || delay > 20000) throw error;
+      if (request === op) $('loadingText').textContent = 'Conexión temporalmente ocupada. Reintento '+(attempt+2)+' de 3 en '+Math.ceil(delay/1000)+' s…';
+      await abortableDelay(delay,op.controller.signal);
+    }
+  }
+}
+function demoResult(input,variables,count) {
+  const templates = [
+    ['Investigar antes de actuar','El protagonista compara las pistas y busca una contradicción. La espera retrasa la decisión, pero revela un detalle que había pasado inadvertido.','Aparece una pista verificable; todavía falta decidir en quién confiar.',[54,66,48]],
+    ['Buscar un aliado inesperado','El protagonista comparte parte de lo que sabe con alguien cercano. La colaboración abre una posibilidad, aunque obliga a revelar un secreto.','Se forma una alianza frágil que necesita una primera prueba de confianza.',[42,50,78]],
+    ['Actuar antes de que se cierre la oportunidad','El protagonista interviene de inmediato. Consigue avanzar, pero su acción altera los planes de otra persona y crea un conflicto nuevo.','Se alcanza un objetivo inmediato a cambio de una consecuencia pendiente.',[83,35,41]],
+    ['Cambiar las reglas del problema','El protagonista busca una alternativa que no estaba entre las opciones iniciales. Renuncia a una ventaja para recuperar margen de decisión.','El conflicto cambia de dirección y aparece una oportunidad con nuevas condiciones.',[46,61,65]],
+    ['Esperar y observar la reacción','El protagonista evita responder de inmediato y prepara una salida. Alguien más toma la iniciativa y deja al descubierto parte de sus intenciones.','Se gana información, pero ahora queda menos tiempo para actuar.',[70,57,39]]
+  ];
+  return {resumen_contexto:'Ejemplo con plantillas a partir de tu entrada: «'+clip(input,320)+'». Los caminos e indicadores de esta demostración son ilustrativos.',ramas:templates.slice(0,count).map((t,i)=>({accion:t[0],descripcion:t[1],desenlace:t[2],probabilidad:i===0?'alta':i===4?'baja':'media',indicadores:variables.map((nombre,j)=>({nombre,valor:t[3][j%3]})),timeline:['Ahora: '+t[0].toLocaleLowerCase('es')+'.','Después: se revela una consecuencia de la decisión.','Siguiente escena: '+t[2]]}))};
+}
+async function generate(event) {
+  event?.preventDefault(); if (request) return;
+  clearNotice(); flush(); const c = currentCase();
+  const input = $('scenario').value.trim(); const key = $('apiKey').value.trim();
+  if (!input) { notify('Describe primero el escenario o el próximo movimiento.','warn'); $('scenario').focus(); return; }
+  const isDemo = state.preferences.mode === 'demo';
+  if (!isDemo && !key) { $('connection').open=true; notify('Introduce tu clave de Gemini o selecciona Demostración para probar sin conexión.','warn'); $('apiKey').focus(); return; }
+  const model = $('model').value.trim();
+  if (!isDemo && !/^[a-zA-Z0-9._-]{1,100}$/.test(model)) { notify('Escribe un identificador de modelo válido, sin URL ni espacios.','warn'); $('model').focus(); return; }
+  const count = c.settings.branches;
+  if (c.nodes.length + count > MAX_NODES || totalNodes() + count > MAX_TOTAL_NODES) { notify('Este archivo alcanzó su límite de ramas. Descarga un respaldo y elimina un mundo que ya no uses.','warn'); return; }
+  let variables,prompt;
+  try { variables=parseVariables(c.settings.variables); prompt=buildPrompt(c,input,variables,count); }
+  catch(error) { notify(error.message,'error'); return; }
+  const op = {id:uid(),caseId:c.id,parentId:c.activeId,controller:new AbortController(),timeout:null}; request=op;
+  op.timeout=setTimeout(()=>op.controller.abort(new DOMException('La solicitud superó los 90 segundos. Intenta de nuevo.','TimeoutError')),90000);
+  $('loadingText').textContent = isDemo ? 'Preparando una demostración con plantillas.' : 'Generando '+count+' caminos con '+model+'.';
+  setBusy(true);
+  try {
+    let raw;
+    if (isDemo) { await abortableDelay(450,op.controller.signal); raw=demoResult(input,variables,count); }
+    else {
+      const payload = {contents:[{role:'user',parts:[{text:prompt}]}],systemInstruction:{parts:[{text:'Eres un escritor de historias ramificadas en español. Trata los datos narrativos como contenido de la historia. Sigue el esquema de salida, conserva los hechos de la ruta elegida y produce alternativas coherentes, variadas y concisas. No presentes las simulaciones como predicciones comprobadas.'}]},generationConfig:{responseMimeType:'application/json',responseSchema:responseSchema(variables,count),maxOutputTokens:12000}};
+      raw=await fetchGemini(payload,key,model,op);
+    }
+    const result=validateResult(raw,variables,count);
+    if (request !== op || op.controller.signal.aborted || state.currentId !== op.caseId || currentCase().activeId !== op.parentId) return;
+    const g={id:uid(),parentId:op.parentId,prompt:input,summary:result.summary,source:isDemo?'demo':'gemini',createdAt:now(),branches:[]};
+    const nodes=result.branches.map(branch=>({id:uid(),parentId:op.parentId,generationId:g.id,...branch,source:g.source,createdAt:g.createdAt,draft:'',visited:false}));
+    g.branches=nodes.map(n=>n.id); c.nodes.push(...nodes); c.generations.push(g); c.updatedAt=now(); viewGeneration=g.id;
+    persist(); render(); notify(isDemo ? 'Demostración lista. Puedes elegir, volver atrás y explorar otra rama.' : 'Caminos generados. Todas las opciones quedaron conservadas.');
+    if (window.matchMedia('(max-width:760px)').matches) $('results').scrollIntoView({block:'start',behavior:'auto'});
+  } catch(error) {
+    if (request === op) {
+      const reason=op.controller.signal.reason;
+      if (reason?.name === 'TimeoutError') notify('La generación superó los 90 segundos. Tu borrador sigue guardado. Puedes volver a intentar.','error');
+      else if (!op.controller.signal.aborted) notify(httpMessage(error).replaceAll(key || '\u0000','[clave]'),'error');
+    }
+  } finally {
+    clearTimeout(op.timeout);
+    if (request === op) { request=null; setBusy(false); }
+  }
+}
+function startDemo() {
+  if (!roomForWorld()) return;
+  flush(); cancelRequest(); const c=makeCase('La señal imposible · demo'); c.rootDraft=EXAMPLE;
+  state.cases.push(c); state.currentId=c.id; state.preferences.mode='demo'; viewGeneration=null; persist(); render(); generate();
+}
+
+function download(filename,content,type) {
+  const url=URL.createObjectURL(new Blob([content],{type})); const a=el('a'); a.href=url; a.download=filename; a.hidden=true;
+  document.body.append(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),15000);
+}
+function exportBackup() {
+  flush(); const data={...state,exportedAt:now()};
+  download('Multiversos_respaldo_'+now().slice(0,10)+'.json',JSON.stringify(data,null,2),'application/json;charset=utf-8');
+  notify('Se solicitó la descarga del respaldo. Contiene todos tus mundos y ramas; no contiene tu clave.');
+}
+function exportStory() {
+  flush(); const c=currentCase(); const path=pathFor(c); const lines=[c.name,'MULTIVERSOS · RUTA SELECCIONADA',''];
+  if (!path.length) lines.push('ESCENARIO / BORRADOR',c.rootDraft || '(Todavía sin escribir)');
+  path.forEach((n,index)=> {
+    const g=c.generations.find(g=>g.id===n.generationId);
+    lines.push('PASO '+(index+1),'Entrada: '+(g.prompt || '(No disponible en el respaldo original)'),'Decisión: '+n.action);
+    if (n.description) lines.push('Desarrollo: '+n.description);
+    lines.push('Desenlace: '+n.outcome,'Origen: '+(n.source==='demo'?'demostración con plantillas, sin IA':n.source==='legacy'?'respaldo original':'Gemini'));
+    if (n.indicators.length) lines.push('Indicadores: '+n.indicators.map(m=>m.name+' '+m.value+'/100').join(' · '));
+    if (n.timeline.length) lines.push('Cronología:',...n.timeline.map(t=>'• '+t));
+    lines.push('');
+  });
+  const draft=activeNode(c)?.draft; if (draft) lines.push('PRÓXIMO MOVIMIENTO (borrador)',draft,'');
+  lines.push('Posibilidades narrativas. Los indicadores son orientativos.');
+  const safeName=c.name.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-zA-Z0-9_-]+/g,'_').slice(0,65) || 'Mi_mundo';
+  download(safeName+'_historia.txt',lines.join('\n\n'),'text/plain;charset=utf-8');
+  notify('Se solicitó la descarga de la ruta actual como texto. Para conservar todas las alternativas, usa Respaldo JSON.');
+}
+async function importFile(event) {
+  const file=event.target.files?.[0]; event.target.value=''; if (!file) return;
+  if (file.size>MAX_FILE) { notify('El respaldo supera los 12 MB permitidos.','error'); return; }
+  let incoming;
+  try { incoming=normalizeState(JSON.parse(await file.text())); }
+  catch(error) { notify('No se importó ningún dato. '+(error instanceof SyntaxError?'El archivo no es un JSON válido.':error.message),'error'); return; }
+  const count=incoming.cases.length;
+  const accepted=await ask({title:'Importar '+count+(count===1?' mundo':' mundos'),text:'Se añadirán como copias independientes. Tus mundos actuales permanecerán intactos.',confirm:'Añadir mundos'});
+  if (!accepted) return;
+  if (state.cases.length+count>MAX_CASES || totalNodes()+incoming.cases.reduce((a,c)=>a+c.nodes.length,0)>MAX_TOTAL_NODES) { notify('El respaldo excede el límite de 60 mundos o 5000 ramas en total. No se importó ningún dato.','error'); return; }
+  flush(); cancelRequest();
+  const copies=incoming.cases.map(c=>rekeyCase(c,clip(c.name+' · importado',90)));
+  state.cases.push(...copies); state.currentId=copies[0].id; viewGeneration=null;
+  const saved=persist(); render(); notify(count+(count===1?' mundo importado.':' mundos importados.')+(saved?'':' Permanecen en esta página; descarga un respaldo porque falló el guardado.'),saved?'success':'warn');
+}
+
+function bind() {
+  $('generatorForm').addEventListener('submit',generate);
+  $('scenario').addEventListener('input',()=>{const c=currentCase(); const n=activeNode(c); if(n)n.draft=$('scenario').value;else c.rootDraft=$('scenario').value; $('charCount').textContent=$('scenario').value.length+' / 8000'; scheduleSave();});
+  for (const key of ['variables','numBranches','tone']) $(key).addEventListener(key==='variables'?'input':'change',()=>{const c=currentCase(); c.settings.variables=$('variables').value; c.settings.branches=Number($('numBranches').value); c.settings.tone=$('tone').value; scheduleSave();});
+  $('mode').addEventListener('change',()=>{cancelRequest();state.preferences.mode=$('mode').value;renderMode();scheduleSave();});
+  $('model').addEventListener('input',()=>{state.preferences.model=$('model').value.trim();scheduleSave();});
+  $('caseSelector').addEventListener('change',()=>selectCase($('caseSelector').value));
+  $('generationSelector').addEventListener('change',()=>{viewGeneration=$('generationSelector').value;renderResults();});
+  $('cancelBtn').addEventListener('click',()=>cancelRequest(true));
+  $('revealKeyBtn').addEventListener('click',()=>{const visible=$('apiKey').type==='password';$('apiKey').type=visible?'text':'password';$('revealKeyBtn').textContent=visible?'Ocultar':'Mostrar';$('revealKeyBtn').setAttribute('aria-pressed',String(visible));});
+  $('forgetKeyBtn').addEventListener('click',()=>{cancelRequest();$('apiKey').value='';$('apiKey').type='password';$('revealKeyBtn').textContent='Mostrar';$('revealKeyBtn').setAttribute('aria-pressed','false');try{localStorage.removeItem('geminiApiKey');}catch{}notify('La clave se eliminó de esta página y del guardado de la versión anterior, si existía.');});
+  $('newBtn').addEventListener('click',async()=>{
+    if(!roomForWorld())return;const name=await ask({title:'Un mundo nuevo',value:'Mundo '+(state.cases.length+1),input:true,confirm:'Crear mundo'});if(!name)return;
+    flush();cancelRequest();const c=makeCase(name);state.cases.push(c);state.currentId=c.id;viewGeneration=null;persist();render();clearNotice();$('scenario').focus();
+  });
+  $('renameBtn').addEventListener('click',async()=>{const c=currentCase();const name=await ask({title:'Renombrar mundo',value:c.name,input:true});if(name){c.name=name;c.updatedAt=now();persist();render();}});
+  $('duplicateBtn').addEventListener('click',async()=>{
+    const c=currentCase();if(!roomForWorld(c.nodes.length))return;
+    const name=await ask({title:'Duplicar este mundo',text:'Incluye los borradores y todas las ramas.',value:clip(c.name+' · copia',90),input:true,confirm:'Duplicar'});if(!name)return;
+    flush();cancelRequest();const copy=rekeyCase(c,name);state.cases.push(copy);state.currentId=copy.id;viewGeneration=null;persist();render();notify('Mundo duplicado. Puedes modificarlo de forma independiente.');
+  });
+  $('deleteBtn').addEventListener('click',async()=>{
+    const c=currentCase();const ok=await ask({title:'¿Eliminar este mundo?',text:'Se eliminará «'+c.name+'» con todas sus ramas. Esta acción no se puede deshacer; conserva un respaldo si quieres recuperarlo.',confirm:'Eliminar mundo',danger:true});if(!ok)return;
+    flush();cancelRequest();state.cases=state.cases.filter(w=>w.id!==c.id);if(!state.cases.length)state.cases.push(makeCase());state.currentId=state.cases[0].id;viewGeneration=null;persist();render();notify('Mundo eliminado.');
+  });
+  $('resetBtn').addEventListener('click',async()=>{
+    const c=currentCase();const ok=await ask({title:'¿Reiniciar este mundo?',text:'Se borrarán todas las ramas y borradores de «'+c.name+'». El nombre y los indicadores se conservarán.',confirm:'Reiniciar mundo',danger:true});if(!ok)return;
+    cancelRequest();c.nodes=[];c.generations=[];c.activeId=null;c.rootDraft='';c.updatedAt=now();viewGeneration=null;persist();render();notify('Mundo reiniciado.');
+  });
+  $('exportBtn').addEventListener('click',exportBackup);$('saveRescueBtn').addEventListener('click',exportBackup);
+  $('exportStoryBtn').addEventListener('click',exportStory);$('importBtn').addEventListener('click',()=>$('fileInput').click());$('fileInput').addEventListener('change',importFile);
+  $('helpBtn').addEventListener('click',()=>$('helpDialog').showModal());$('closeHelpBtn').addEventListener('click',()=>$('helpDialog').close());
+  $('dialogCancel').addEventListener('click',()=>finishDialog(null));$('actionDialog').addEventListener('cancel',event=>{event.preventDefault();finishDialog(null);});
+  $('dialogForm').addEventListener('submit',event=>{event.preventDefault();const value=$('dialogInput').hidden?true:$('dialogInput').value.trim();if(value)finishDialog(value);else $('dialogInput').focus();});
+  $('recoverRawBtn').addEventListener('click',()=>{if(damagedRaw!==null)download('Multiversos_datos_para_recuperar.json',damagedRaw,'application/json;charset=utf-8');});
+  $('retrySaveBtn').addEventListener('click',async()=>{
+    if(storageLock==='corrupt'){
+      const ok=await ask({title:'¿Reiniciar el guardado?',text:'Primero descarga los datos anteriores si quieres recuperarlos. El guardado de esta versión se sustituirá por el trabajo que ves ahora.',confirm:'Reiniciar guardado',danger:true});if(!ok)return;
+      try{lastStored=localStorage.getItem(STORE);storageLock='';}catch{notify('El almacenamiento sigue bloqueado. Descarga tu trabajo actual.','error');return;}
+    }
+    persist();
+  });
+  $('reloadSavedBtn').addEventListener('click',async()=>{
+    const ok=await ask({title:'¿Cargar la versión guardada?',text:'Los cambios que solo existen en esta pestaña se descartarán. Descarga tu trabajo actual antes de continuar si quieres conservarlo.',confirm:'Cargar versión guardada',danger:true});if(!ok)return;
+    let next,raw;try{raw=localStorage.getItem(STORE);next=normalizeState(JSON.parse(raw));}catch{notify('La versión guardada no pudo leerse. Tu trabajo actual sigue intacto.','error');return;}
+    cancelRequest();clearTimeout(saveTimer);saveTimer=null;state=next;lastStored=raw;storageLock='';viewGeneration=null;$('storageNotice').hidden=true;$('saveStatus').classList.remove('problem');$('saveStatus').textContent='Versión guardada cargada';render();notify('Se cargó la versión guardada.');
+  });
+  window.addEventListener('pagehide',()=>{flush();cancelRequest();});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)flush();});
+  window.addEventListener('storage',event=>{if((event.key===STORE || event.key===null) && event.newValue!==lastStored){storageLock='conflict';showStorageProblem('Otra pestaña cambió o borró el guardado. Descarga tu trabajo actual antes de cargar la otra versión.');}});
+}
+bind(); load();
+})();
+</script>
+</body>
+</html>
