@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>🐱 Generador de Temas — Mimi the Kitty</title>
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { font-family: -apple-system, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0;
+         background: linear-gradient(135deg, #fff5f7 0%, #ffe4ec 50%, #f3e8ff 100%); color: #4a2c3a; }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 16px 14px 60px; }
+  h1 { text-align: center; font-size: 1.5em; margin: 10px 0 2px; }
+  .sub { text-align: center; color: #a06a85; font-size: .9em; margin-bottom: 14px; }
+  .stats { display: flex; gap: 8px; margin-bottom: 14px; }
+  .stat { flex: 1; background: #fff; border-radius: 14px; padding: 10px 6px; text-align: center;
+          box-shadow: 0 2px 8px rgba(200,100,150,.12); }
+  .stat b { display: block; font-size: 1.05em; color: #d6336c; }
+  .stat span { font-size: .72em; color: #a06a85; }
+  .card { background: #fff; border-radius: 18px; padding: 18px; margin-bottom: 14px;
+          box-shadow: 0 3px 12px rgba(200,100,150,.14); }
+  .card h2 { margin: 0 0 10px; font-size: 1.05em; color: #d6336c; }
+  label { font-size: .85em; color: #a06a85; display: block; margin-bottom: 6px; }
+  select, input[type=password], input[type=text] { width: 100%; padding: 12px; border-radius: 12px;
+      border: 2px solid #ffd6e5; font-size: 1em; background: #fff8fa; color: #4a2c3a; margin-bottom: 10px; }
+  .btn { display: block; width: 100%; padding: 15px; border: none; border-radius: 16px; font-size: 1.1em;
+         font-weight: bold; cursor: pointer; margin-bottom: 10px; }
+  .btn-main { background: linear-gradient(135deg, #ff6b9d, #d6336c); color: #fff;
+              box-shadow: 0 4px 14px rgba(214,51,108,.35); }
+  .btn-main:active { transform: scale(.98); }
+  .btn-sec { background: #fff; color: #d6336c; border: 2px solid #ffb3cd; font-size: .95em; padding: 11px; }
+  .btn-row { display: flex; gap: 8px; }
+  .btn-row .btn { margin-bottom: 0; }
+  .topic { background: linear-gradient(135deg, #fff0f5, #f8e8ff); border-radius: 14px; padding: 16px;
+           margin: 12px 0; border: 2px dashed #ffb3cd; }
+  .topic .fmt { display: inline-block; background: #d6336c; color: #fff; font-size: .72em; font-weight: bold;
+                padding: 4px 10px; border-radius: 20px; margin-bottom: 8px; }
+  .topic .title { font-size: 1.25em; font-weight: bold; margin-bottom: 6px; }
+  .topic .concept { font-size: .92em; color: #7a4a5e; line-height: 1.45; }
+  .mini { font-size: .8em; color: #a06a85; line-height: 1.5; }
+  .hist-item { display: flex; align-items: center; gap: 8px; background: #fff8fa; border-radius: 10px;
+               padding: 8px 10px; margin-bottom: 6px; font-size: .85em; }
+  .hist-item span { flex: 1; }
+  .x { background: none; border: none; color: #d6336c; font-size: 1.1em; cursor: pointer; padding: 4px 8px; }
+  .batch-item { background: #fff8fa; border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; }
+  .batch-item b { display: block; font-size: .95em; }
+  .batch-item p { margin: 4px 0 6px; font-size: .83em; color: #7a4a5e; }
+  .linkbtn { background: none; border: none; color: #d6336c; font-weight: bold; cursor: pointer;
+             font-size: .85em; padding: 2px 0; }
+  .ok { color: #2b8a3e; font-weight: bold; }
+  .err { color: #c92a2a; font-weight: bold; }
+  details { margin-top: 8px; }
+  summary { cursor: pointer; color: #d6336c; font-weight: bold; font-size: .9em; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🐱 Generador de Temas</h1>
+  <div class="sub">Mimi the Kitty · temas únicos, jamás repetidos</div>
+
+  <div class="stats">
+    <div class="stat"><b id="st-total">…</b><span>combinaciones posibles</span></div>
+    <div class="stat"><b id="st-used">0</b><span>temas usados</span></div>
+    <div class="stat"><b id="st-left">…</b><span>disponibles</span></div>
+  </div>
+
+  <div class="card">
+    <h2>✨ Nuevo tema</h2>
+    <label>Tipo de contenido</label>
+    <select id="fmt-filter"></select>
+    <button class="btn btn-main" id="btn-one">✨ Generar tema</button>
+    <div class="btn-row">
+      <button class="btn btn-sec" id="btn-ten">🎲 Generar 10</button>
+      <button class="btn btn-sec" id="btn-copy">📋 Copiar tema</button>
+    </div>
+    <div id="current"></div>
+  </div>
+
+  <div class="card">
+    <h2>🤖 Temas con IA (opcional)</h2>
+    <div class="mini" style="margin-bottom:8px">Pega tu llave <b>gratuita</b> de Google AI Studio (como en Multiversos). La llave se guarda <b>solo en tu teléfono</b>, nunca sale de aquí salvo a Google.</div>
+    <label>Llave de Gemini (gratis en <b>ai.google.dev</b>)</label>
+    <input type="password" id="ai-key" placeholder="Pega tu llave aquí" autocomplete="off">
+    <button class="btn btn-sec" id="btn-ai">🤖 Pedir 10 temas a la IA</button>
+    <div id="ai-status" class="mini"></div>
+    <div id="ai-results"></div>
+  </div>
+
+  <div class="card">
+    <h2>📜 Historial de usados</h2>
+    <div class="mini" style="margin-bottom:8px">Todo lo que generes y marques como usado queda aquí. El generador <b>nunca</b> repetirá un tema de esta lista.</div>
+    <div id="history"></div>
+    <div class="btn-row" style="margin-top:10px">
+      <button class="btn btn-sec" id="btn-export">💾 Exportar</button>
+      <button class="btn btn-sec" id="btn-import">📥 Importar</button>
+    </div>
+    <input type="file" id="file-import" accept=".json" class="hidden">
+  </div>
+
+  <div class="card">
+    <details>
+      <summary>ℹ️ ¿Cómo funciona?</summary>
+      <div class="mini" style="margin-top:8px">
+        El programa combina categorías (animales, comidas, lugares, travesuras, bailes, emociones…) en millones de
+        temas únicos. Cada tema generado se registra con una clave única; si ya se usó, se descarta y se genera otro.
+        Los temas ya publicados de Mimi (letras A–F, cortos, canciones, palabras del día…) vienen precargados como usados.
+        Con la llave de Gemini, la IA propone temas frescos y también se filtran contra esta lista.
+      </div>
+    </details>
+  </div>
+</div>
+
+<script>
+"use strict";
+/* ============ DATOS ============ */
+const ANIMALS = ["puppy","kitten","duckling","bunny","chick","lamb","piglet","calf","foal","panda","koala","penguin","seal","dolphin","whale","octopus","crab","turtle","frog","butterfly","bee","ladybug","snail","elephant","lion","tiger","bear","monkey","giraffe","zebra","hippo","kangaroo","parrot","owl","eagle","flamingo","peacock","swan","hedgehog","squirrel","raccoon","fox","deer","camel","llama","dinosaur","baby dragon","hedgehog","caterpillar"];
+const FOODS = ["apple","banana","strawberry","watermelon","grapes","orange","pineapple","mango","cupcake","donut","ice cream","pizza","popcorn","cookie","cake","sandwich","spaghetti","pancake","waffle","cheese","carrot","corn","pumpkin","egg","milk","juice","candy","lollipop","chocolate","marshmallow","taco","hamburger","fries","pear","peach","cherry","lemon","coconut","blueberry","melon","bread","honey","yogurt","cereal","pie","muffin","pretzel","plum","sushi","croissant"];
+const OBJECTS = ["balloon","ball","kite","umbrella","hat","crown","glasses","mirror","camera","book","crayon","paintbrush","drum","guitar","piano","trumpet","violin","xylophone","teddy bear","doll","blocks","puzzle","toy car","train","boat","rocket","airplane","bicycle","scooter","swing","slide","trampoline","bubble wand","flashlight","lantern","star wand","treasure chest","map","key","box","gift","backpack","pillow","blanket","soap bubbles","watering can","flower pot","snowball","feather","seashell","snowman","robot","toy phone","music box","jump rope","hula hoop","pinwheel","maraca","tambourine"," harmonica".trim()];
+const PLACES = ["garden","park","beach","forest","farm","zoo","playground","kitchen","bedroom","backyard","school","library","market","bakery","circus","castle","pirate ship","spaceship","underwater palace","candy land","cloud city","rainbow valley","sunny meadow","snowy hill","treehouse","campsite","pond","mountain top","living room","bathtub"];
+const DANCES = ["wiggle","giggle spin","happy jump","twirl","stomp clap","tippy-toe walk","silly shuffle","bounce bounce","wave paws","tail swish","head bob","freeze dance","conga line","hokey pokey","belly flop"];
+const EMOTIONS = ["happy","silly","surprised","sleepy","brave","kind","excited","calm","curious","proud","shy","giggly"];
+const ADJS = ["silly","happy","sparkly","wiggly","giggly","sunny","fluffy","bouncy","twirly","jumpy","snuggly","bubbly","cheerful","playful","dreamy","magical","colorful","funny","sweet","tiny","giant","brave","kind","starry","rainbow"];
+const COMPANIONS = ["baby duckling","little puppy","butterfly friend","baby bunny","tiny turtle","giggly chick","baby penguin","ladybug buddy","baby elephant","froggy friend","baby owl","kitten sister"];
+const OCCASIONS = ["sunny morning","rainy day","snowy day","beach day","birthday party","Halloween","Christmas","picnic day","bedtime","spring morning"];
+const MISCHIEFS = ["eats it all up","sits on it","pops it","chases it around","hugs it too hard","loses it","breaks it while dancing","wears it as a hat","shares it with a friend","hides inside it","paints it rainbow","sings to it","tickles it","races it","naps on it","tries to feed it","gives it a bath","flies away with it","bounces on it","gets tangled in it","waters it like a plant","builds a tower with it","invites friends to see it","trades it for a giggle","makes a wish on it"];
+const MAGICALS = ["magic wand","golden key","starry cape","rainbow boots","talking mirror","flying carpet","bubble machine","music box","candy compass","dream pillow","giggle potion","sunny lantern","moon balloon","treasure map","crystal bell","fluffy cloud","wishing star","rainbow paint","tickle feather","sleepy dust"];
+const LESSONS = ["sharing is caring","be kind to everyone","never give up","say thank you","help your friends","be brave","clean up your toys","eat your veggies","bedtime is cozy","say sorry with a hug"];
+const VEHICLES = ["rocket","pirate ship","hot air balloon","train","submarine","magic carpet","bicycle","scooter","boat","airplane","tractor","fire truck","school bus","canoe","roller skates"];
+const UTENSILS = ["big pot","silly pan","wooden spoon","mixing bowl","teacup","mixer","oven mitt","apron","whisk","rolling pin","cookie cutter","plate","teapot","blender","lunchbox"];
+const SITUATIONS = ["slips and slides","gets stuck","pops like popcorn","grows super big","shrinks super small","dances away","makes a huge splash","flies like a balloon","multiplies by ten","turns rainbow colors","sings opera","does somersaults","runs in circles","bounces like a ball","melts like ice cream","floats to the sky","starts a parade","giggles nonstop","spins like a top","tickles everyone"];
+const COLORS = ["red","blue","yellow","green","pink","purple","orange","rainbow","golden","silver","turquoise","magenta","peach","lime"];
+const CAUSES = ["lost her toy","a rainy day","a new friend","a loud noise","a yummy treat","bedtime","her birthday","a funny joke","a big hug","a silly shadow","a lost balloon","a messy room","a tummy ache","her first day","sharing toys","bath time","a thunderstorm","missing mom","a broken crayon","too much candy","a long car ride","a dark room","a buzzing bee","spilled milk","a wobbly tooth"];
+const FIXES = ["takes deep breaths","hugs a friend","sings a happy song","dances it out","counts to ten","draws a picture","tells a grown-up","thinks happy thoughts"];
+const FACTS = ["3 amazing facts","its superpower","what babies are called","what it loves to eat","its funny sound","where it lives"];
+const CHARACTERS = ["baby duckling","little puppy","butterfly friend","baby bunny","tiny turtle","giggly chick","baby penguin","ladybug buddy","baby elephant","froggy friend","baby owl","kitten sister","baby fox","tiny hedgehog","baby seal","little lamb","baby monkey","caterpillar friend","baby dolphin","snail buddy"];
+const LETTERS = {G:["grapes","gift","guitar","garden","goat","glue"],H:["hat","horse","house","heart","helicopter","honey"],I:["ice cream","igloo","insect","island","ink","iron"],J:["juice","jellyfish","jacket","jump","jar","jaguar"],K:["kite","kitten","key","kangaroo","king","kitchen"],L:["lion","lamp","leaf","lemon","llama","ladder"],M:["moon","monkey","milk","mouse","mountain","muffin"],N:["nest","nose","night","nurse","noodles","nap"],O:["orange","owl","ocean","octopus","oven","onion"],P:["pig","pizza","penguin","piano","pumpkin","pillow"],Q:["queen","quilt","quail","question","quarter","quiet"],R:["rainbow","rabbit","robot","rocket","rose","river"],S:["sun","star","sandwich","seal","snail","sock"],T:["tiger","train","turtle","tree","taco","trumpet"],U:["umbrella","unicorn","ukulele","uniform","up","under"],V:["violin","volcano","vest","vegetables","van","vine"],W:["whale","watermelon","window","wagon","wolf","web"],X:["xylophone","x-ray","xmas tree","xylophone"],Y:["yo-yo","yak","yogurt","yarn","yellow","yacht"],Z:["zebra","zoo","zipper","zero","zigzag","zucchini"]};
+const WORDS = ["puppy","kitten","duckling","bunny","chick","lamb","piglet","panda","koala","penguin","seal","dolphin","whale","octopus","crab","turtle","frog","butterfly","bee","ladybug","snail","elephant","lion","tiger","bear","monkey","giraffe","zebra","owl","parrot","flamingo","hedgehog","squirrel","fox","deer","camel","dinosaur","unicorn","dragon","mermaid","apple","banana","strawberry","watermelon","grapes","orange","pineapple","mango","cupcake","donut","ice cream","pizza","popcorn","cookie","cake","sandwich","pancake","cheese","carrot","pumpkin","egg","milk","juice","candy","chocolate","taco","pear","peach","cherry","lemon","coconut","blueberry","bread","honey","yogurt","pie","muffin","melon","plum","balloon","ball","kite","umbrella","hat","crown","glasses","mirror","camera","book","crayon","drum","guitar","piano","teddy bear","blocks","toy car","train","boat","rocket","airplane","bicycle","swing","slide","flashlight","treasure chest","map","key","gift","pillow","blanket","flower","leaf","feather","shell","snowman","star","moon","sun","rainbow","robot","bubble","tree","cloud","rain","snow","river","lake","ocean","mountain","beach","forest","garden","rock","wave","sunset","pond","waterfall","island","meadow","bed","chair","table","door","window","lamp","sofa","kitchen","bathroom","bedroom","towel","soap","toothbrush","clock","phone","basket","box","bag","shirt","pants","dress","shoes","socks","coat","gloves","scarf","boots","pajamas","cape","mask","car","bus","airplane","boat","truck","tractor","balloon","submarine","scooter","fire truck","taxi","helicopter","eyes","nose","mouth","ears","hands","feet","hair","teeth","tongue","fingers","mom","dad","baby","grandma","grandpa","sister","brother","friend","teacher","doctor","farmer","baker","pilot","dancer","park","zoo","farm","school","library","store","bakery","circus","castle","playground","hospital","spring","summer","fall","winter","hug","kiss","dance","song","dream","wish","magic","party","parade","picnic","nap","bath","birthday","game","race","treasure","surprise","princess","pirate","superhero","ghost","monster","alien","robot","music","painting","puzzle","blocks","marble","yo-yo","top","doll","kite","slide","seesaw","sandbox","sprinkler","sidewalk","fence","mailbox","porch","attic","basement","hallway","stairs","elevator","bridge","tunnel","tower","tent","campfire","lantern","compass","binoculars","backpack","canteen","sleeping bag","pillow fight","storybook","nightlight","lullaby","cradle","rocking chair","porch swing","treehouse","doghouse","birdhouse","beehive","anthill","spiderweb","cocoon","acorn","pinecone","mushroom","dandelion","tulip","rose","daisy","sunflower","cactus","palm tree","bamboo","coral","pearl","starfish","seahorse","jellyfish","clam","sandcastle","bucket","shovel","kite string","pinwheel","frisbee","soccer ball","basketball","tennis ball","baseball","golf ball","bowling","skateboard","roller skates","tricycle","wagon","sled","snowboard","skis","ice skates","flippers","snorkel","life jacket","raft","canoe","kayak","sailboat","yacht","ferry","lighthouse","buoy","anchor","dock","pier","boardwalk","carousel","ferris wheel","roller coaster","bumper cars","cotton candy","popcorn stand","ticket booth","big top","trapeze","clown","juggler","magician","acrobat"];
+</script>
+<script>
+"use strict";
+/* ============ MOTOR ============ */
+const NOUNS = [...new Set([...ANIMALS, ...FOODS, ...OBJECTS])];
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+const plural = s => /s$/.test(s) ? s : s + "s";
+
+const FORMATS = [
+  { id:"song", name:"🎵 Canción original", slots:()=>[r(ADJS), r(NOUNS), r(DANCES), r(OCCASIONS)],
+    title:v=>`Mimi's ${cap(v[0])} ${cap(v[1])} Dance Song`,
+    concept:v=>`Original song: Mimi sings about the ${v[0]} ${v[1]} and teaches the "${v[2]}" dance move on a ${v[3]}. Short chorus, easy steps, on loop!` },
+  { id:"short", name:"🎬 Corto gracioso", slots:()=>[r(MISCHIEFS), r(NOUNS), r(PLACES), r(COMPANIONS)],
+    title:v=>`Mimi's ${cap(v[1])} Mischief!`,
+    concept:v=>`Mini-movie (3 scenes): Mimi ${v[0]} the ${v[1]} at the ${v[2]} with her ${v[3]}. Funny twist, sweet ending!` },
+  { id:"dance", name:"💃 Reto de baile", slots:()=>[r(DANCES), r(OCCASIONS), r(COMPANIONS)],
+    title:v=>`The ${cap(v[0])} Challenge!`,
+    concept:v=>`Dance challenge: do the "${v[0]}" with Mimi on a ${v[1]} while her ${v[2]} cheers. Anyone can copy the steps!` },
+  { id:"numbers", name:"🔢 Números", slots:()=>[1+Math.floor(Math.random()*20), r(NOUNS), r(PLACES)],
+    title:v=>`Counting ${v[0]} ${cap(plural(v[1]))} with Mimi!`,
+    concept:v=>`Mimi counts ${v[0]} ${plural(v[1])} at the ${v[2]}, one by one, with a fun song.` },
+  { id:"colors", name:"🎨 Colores", slots:()=>[r(COLORS), r(NOUNS)],
+    title:v=>`Mimi's ${cap(v[0])} Day!`,
+    concept:v=>`Everything turns ${v[0]}! Mimi finds ${v[0]} ${plural(v[1])} and learns the color ${v[0]}.` },
+  { id:"story", name:"🌙 Cuento para dormir", slots:()=>[r(CHARACTERS), r(PLACES), r(MAGICALS), r(LESSONS)],
+    title:v=>`Mimi and the ${cap(v[2])}`,
+    concept:v=>`Bedtime story: Mimi and her ${v[0]} find a ${v[2]} in the ${v[1]}. Gentle lesson: ${v[3]}.` },
+  { id:"adventure", name:"🗺️ Aventura", slots:()=>[r(VEHICLES), r(PLACES), r(ANIMALS)],
+    title:v=>`Mimi's ${cap(v[0])} Adventure!`,
+    concept:v=>`Mimi rides a ${v[0]} to the ${v[1]} and meets a friendly ${v[2]}. Discover, play, sing!` },
+  { id:"cooking", name:"🧁 Cocina divertida", slots:()=>[r(FOODS), r(UTENSILS), r(SITUATIONS)],
+    title:v=>`Mimi Cooks ${cap(v[0])}!`,
+    concept:v=>`Mimi tries to cook ${v[0]} with a ${v[1]}... and it ${v[2]}! Yummy funny chaos.` },
+  { id:"animal", name:"🦁 Dato animal", slots:()=>[r(ANIMALS), r(FACTS)],
+    title:v=>`Amazing ${cap(plural(v[0]))}!`,
+    concept:v=>`Mimi discovers ${v[1]} about ${plural(v[0])}! Fun facts for curious little minds.` },
+  { id:"emotion", name:"💛 Emociones", slots:()=>[r(EMOTIONS), r(CAUSES), r(FIXES)],
+    title:v=>`Mimi Feels ${cap(v[0])}`,
+    concept:v=>`Mimi feels ${v[0]} because of ${v[1]}. She learns: ${v[2]}. Sweet emotional learning.` },
+  { id:"word", name:"🔤 Palabra del día", finite:"words", slots:()=>[unusedWord()],
+    title:v=>`Word of the Day: ${cap(v[0])}!`,
+    concept:v=>`Mimi teaches the word "${v[0]}" with a cute example and repeats it for little learners.` },
+  { id:"letter", name:"🅰️ Letra del abecedario", finite:"letters", slots:()=>[unusedLetter()],
+    title:v=>`${v[0][0]} is for ${cap(v[0][1])}!`,
+    concept:v=>`Mimi dances with the giant letter ${v[0][0]} and a ${v[0][1]}. "${v[0][0]} is for ${cap(v[0][1])}!"` },
+];
+function r(a){ return a[Math.floor(Math.random()*a.length)]; }
+function keyOf(f, vals){
+  if(f.id==="letter") return "letter|"+vals[0][0].toLowerCase();
+  return f.id+"|"+vals.map(v=>String(v).toLowerCase().replace(/\s+/g,"-")).join("|");
+}
+
+/* ---- usados (localStorage + semillas) ---- */
+const SEED = [
+  "letter|a","letter|b","letter|c","letter|d","letter|e","letter|f",
+  "word|sun","word|fish","word|cat","word|dog","word|star","word|moon","word|bird",
+  "word|apple","word|ball","word|butterfly","word|flower","word|rainbow",
+  "song|halloween-night","song|wiggle-giggle",
+  "short|helado-travieso","short|burbuja-gigante","short|sandia-gigante","short|hora-de-dormir","short|halloween",
+  "cta|follow-like-share","serie|tesoro-1","video|abc","video|numeros","video|primer-video"
+];
+let used = new Set();
+try {
+  const raw = localStorage.getItem("mimi-temas-used");
+  if (raw) used = new Set(JSON.parse(raw));
+  else { SEED.forEach(k=>used.add(k)); saveUsed(); }
+} catch(e){ SEED.forEach(k=>used.add(k)); }
+function saveUsed(){ try{ localStorage.setItem("mimi-temas-used", JSON.stringify([...used])); }catch(e){} }
+
+/* ---- pools finitos: palabras y letras ---- */
+const usedWords = new Set([...used].filter(k=>k.startsWith("word|")).map(k=>k.slice(5)));
+const usedLetters = new Set([...used].filter(k=>k.startsWith("letter|")).map(k=>k.slice(7).toUpperCase()));
+function unusedWord(){
+  const pool = WORDS.filter(w=>!usedWords.has(w));
+  if(!pool.length) return null;
+  return r(pool);
+}
+function unusedLetter(){
+  const ls = Object.keys(LETTERS).filter(L=>!usedLetters.has(L));
+  if(!ls.length) return null;
+  const L = r(ls);
+  return [L, r(LETTERS[L])];
+}
+
+/* ---- generación ---- */
+let current = null;
+const previewed = new Set();   // vistas en esta sesión, no comprometidas
+function genOne(filterId){
+  const cands = filterId==="all" ? FORMATS : FORMATS.filter(f=>f.id===filterId);
+  for(let t=0;t<200;t++){
+    const f = r(cands);
+    const vals = f.slots();
+    if(!vals || vals.includes(null)) continue;       // pool finito agotado
+    const key = keyOf(f, vals);
+    if(used.has(key) || previewed.has(key)) continue;
+    previewed.add(key);
+    return { f, vals, key, title:f.title(vals), concept:f.concept(vals) };
+  }
+  return null;
+}
+function markUsed(t){
+  used.add(t.key);
+  if(t.f.id==="word") usedWords.add(t.vals[0]);
+  if(t.f.id==="letter") usedLetters.add(t.vals[0][0]);
+  saveUsed(); refreshStats(); renderHistory();
+}
+function poolSize(){
+  let n = 0;
+  n += ADJS.length*NOUNS.length*DANCES.length*OCCASIONS.length;
+  n += MISCHIEFS.length*NOUNS.length*PLACES.length*COMPANIONS.length;
+  n += DANCES.length*OCCASIONS.length*COMPANIONS.length;
+  n += 20*NOUNS.length*PLACES.length;
+  n += COLORS.length*NOUNS.length;
+  n += CHARACTERS.length*PLACES.length*MAGICALS.length*LESSONS.length;
+  n += VEHICLES.length*PLACES.length*ANIMALS.length;
+  n += FOODS.length*UTENSILS.length*SITUATIONS.length;
+  n += ANIMALS.length*FACTS.length;
+  n += EMOTIONS.length*CAUSES.length*FIXES.length;
+  n += WORDS.filter(w=>!usedWords.has(w)).length;
+  n += Object.keys(LETTERS).filter(L=>!usedLetters.has(L)).length*6;
+  return n;
+}
+</script>
+<script>
+"use strict";
+/* ============ UI ============ */
+const $ = id => document.getElementById(id);
+const fmtSel = $("fmt-filter");
+fmtSel.innerHTML = `<option value="all">🎲 Todos los tipos</option>` +
+  FORMATS.map(f=>`<option value="${f.id}">${f.name}</option>`).join("");
+
+function fmt(n){ return n.toLocaleString("es"); }
+function refreshStats(){
+  $("st-total").textContent = fmt(poolSize() + used.size);
+  $("st-used").textContent = fmt(used.size);
+  $("st-left").textContent = fmt(poolSize());
+}
+function topicHTML(t){
+  return `<div class="topic"><span class="fmt">${t.f.name}</span>
+    <div class="title">${t.title}</div><div class="concept">${t.concept}</div></div>`;
+}
+function showCurrent(){
+  $("current").innerHTML = current ? topicHTML(current)
+    : `<div class="mini" style="margin-top:10px">Toca "Generar tema" para empezar 🐱</div>`;
+}
+$("btn-one").onclick = () => {
+  const t = genOne(fmtSel.value);
+  if(!t){ $("current").innerHTML = `<div class="err">Ese pool se agotó. Prueba con otro tipo.</div>`; return; }
+  current = t; showCurrent();
+  // auto-marcar como usado al generar: garantiza no-repetición
+  markUsed(t);
+};
+$("btn-ten").onclick = () => {
+  let html = "";
+  for(let i=0;i<10;i++){
+    const t = genOne(fmtSel.value);
+    if(!t) break;
+    markUsed(t);
+    html += `<div class="batch-item"><b>${t.title}</b><p>${t.f.name} · ${t.concept}</p>
+      <button class="linkbtn" data-copy="${encodeURIComponent(t.title+"\n"+t.concept)}">📋 Copiar</button></div>`;
+  }
+  $("current").innerHTML = html || `<div class="err">Pool agotado.</div>`;
+  document.querySelectorAll("[data-copy]").forEach(b=>b.onclick=()=>{
+    navigator.clipboard.writeText(decodeURIComponent(b.dataset.copy));
+    b.textContent = "✅ Copiado"; setTimeout(()=>b.textContent="📋 Copiar",1500);
+  });
+};
+$("btn-copy").onclick = () => {
+  if(!current) return;
+  navigator.clipboard.writeText(current.title+"\n"+current.concept);
+  $("btn-copy").textContent = "✅ ¡Copiado!";
+  setTimeout(()=>$("btn-copy").textContent="📋 Copiar tema",1500);
+};
+
+/* ---- historial ---- */
+function renderHistory(){
+  const arr = [...used].reverse().slice(0,30);
+  $("history").innerHTML = arr.length ? arr.map(k=>
+    `<div class="hist-item"><span>${k}</span><button class="x" data-k="${k}" title="Quitar de usados">✕</button></div>`
+  ).join("") : `<div class="mini">Vacío.</div>`;
+  document.querySelectorAll(".hist-item .x").forEach(b=>b.onclick=()=>{
+    used.delete(b.dataset.k); saveUsed(); refreshStats(); renderHistory();
+  });
+}
+$("btn-export").onclick = () => {
+  const blob = new Blob([JSON.stringify([...used],null,1)],{type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = "mimi-temas-usados.json"; a.click();
+};
+$("btn-import").onclick = () => $("file-import").click();
+$("file-import").onchange = e => {
+  const f = e.target.files[0]; if(!f) return;
+  const rd = new FileReader();
+  rd.onload = () => { try{
+      const arr = JSON.parse(rd.result);
+      arr.forEach(k=>used.add(String(k))); saveUsed(); refreshStats(); renderHistory();
+    }catch(err){ alert("Archivo inválido"); } };
+  rd.readAsText(f);
+};
+
+/* ---- IA (Gemini, llave gratuita del usuario) ---- */
+try{ const k = localStorage.getItem("mimi-temas-gemini-key"); if(k) $("ai-key").value = k; }catch(e){}
+$("ai-key").onchange = e => { try{ localStorage.setItem("mimi-temas-gemini-key", e.target.value.trim()); }catch(err){} };
+$("btn-ai").onclick = async () => {
+  const key = $("ai-key").value.trim();
+  const box = $("ai-status"), out = $("ai-results");
+  if(!key){ box.innerHTML = `<span class="err">Pega primero tu llave gratuita de ai.google.dev</span>`; return; }
+  box.textContent = "🤖 Pidiendo temas a la IA…"; out.innerHTML = "";
+  const usedList = [...used].slice(-120).join(", ");
+  const prompt = `Generate 10 unique, super fun video topic ideas for "Mimi the Kitty", a 3D cartoon white kitten channel for preschool kids (ages 2-5). Mix formats: original song, funny short, word of the day, dance challenge, bedtime story, counting, colors, animal facts, emotions. Already used (NEVER repeat these or anything similar): ${usedList}. Return ONLY a JSON array, no other text: [{"title":"catchy English title, max 8 words","format":"song|short|word|dance|story|numbers|colors|animal|emotion","concept":"one line English concept"}]`;
+  try{
+    const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key="+encodeURIComponent(key),{
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({ contents:[{parts:[{text:prompt}]}], generationConfig:{temperature:0.9} })
+    });
+    const data = await res.json();
+    if(data.error) throw new Error(data.error.message);
+    let txt = data.candidates[0].content.parts.map(p=>p.text).join("");
+    txt = txt.replace(/```json|```/g,"").trim();
+    const items = JSON.parse(txt);
+    let added = 0, html = "";
+    items.forEach(it=>{
+      const k = "ai|"+String(it.title).toLowerCase().replace(/[^a-z0-9]+/g,"-");
+      if(used.has(k)) return;
+      added++;
+      html += `<div class="batch-item"><b>${it.title}</b><p>🤖 ${it.format} · ${it.concept}</p>
+        <button class="linkbtn" data-ai="${encodeURIComponent(k+"|||"+it.title+"\n"+it.concept)}">✅ Marcar usado</button>
+        <button class="linkbtn" data-cp="${encodeURIComponent(it.title+"\n"+it.concept)}">📋 Copiar</button></div>`;
+    });
+    out.innerHTML = html || `<div class="mini">La IA repitió temas usados; pide de nuevo.</div>`;
+    box.innerHTML = `<span class="ok">${added} temas nuevos de IA (ya filtrados contra usados).</span>`;
+    out.querySelectorAll("[data-ai]").forEach(b=>b.onclick=()=>{
+      const [k] = decodeURIComponent(b.dataset.ai).split("|||");
+      used.add(k); saveUsed(); refreshStats(); renderHistory();
+      b.textContent = "✅ Usado"; b.disabled = true;
+    });
+    out.querySelectorAll("[data-cp]").forEach(b=>b.onclick=()=>{
+      navigator.clipboard.writeText(decodeURIComponent(b.dataset.cp));
+      b.textContent = "✅ Copiado"; setTimeout(()=>b.textContent="📋 Copiar",1500);
+    });
+  }catch(err){
+    box.innerHTML = `<span class="err">Error: ${err.message}</span>`;
+  }
+};
+
+refreshStats(); renderHistory(); showCurrent();
+</script>
+</body>
+</html>
