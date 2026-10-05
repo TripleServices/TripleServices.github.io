@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐱 Tienda de Mimi the Kitty</title>
+<meta name="description" content="Ropa y accesorios tiernos de Mimi the Kitty para pequeños fans. Compra segura en Redbubble.">
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { font-family: -apple-system, 'Segoe UI', Roboto, sans-serif; margin: 0;
+         background: linear-gradient(160deg, #fff5f7 0%, #ffe4ec 55%, #f3e8ff 100%);
+         color: #4a2c3a; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 18px 14px 60px; }
+  header { text-align: center; margin-bottom: 18px; }
+  header img { width: 92px; height: 92px; border-radius: 50%; border: 4px solid #fff;
+               box-shadow: 0 4px 14px rgba(214,51,108,.25); object-fit: cover; }
+  h1 { font-size: 1.7em; margin: 10px 0 4px; color: #d6336c; }
+  .sub { color: #a06a85; font-size: .95em; margin-bottom: 6px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 420px){ .grid { grid-template-columns: 1fr 1fr; gap: 10px; } }
+  .card { background: #fff; border-radius: 18px; overflow: hidden;
+          box-shadow: 0 3px 12px rgba(200,100,150,.15); display: flex; flex-direction: column; }
+  .card .imgbox { background: #fff8fa; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; padding: 10px; }
+  .card img.art { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .card .body { padding: 12px 12px 14px; display: flex; flex-direction: column; flex: 1; }
+  .card h2 { font-size: .95em; margin: 0 0 8px; line-height: 1.3; }
+  .tag { display: inline-block; background: #ffe066; color: #7a5b00; font-size: .68em; font-weight: bold;
+         padding: 3px 9px; border-radius: 20px; margin-bottom: 6px; align-self: flex-start; }
+  .buy { display: block; text-align: center; text-decoration: none; font-weight: bold; font-size: .85em;
+         padding: 9px 6px; border-radius: 12px; margin-bottom: 6px;
+         background: #fff; color: #d6336c; border: 2px solid #ffb3cd; }
+  .buy:active { background: #ffe4ec; }
+  .buy.main { background: linear-gradient(135deg, #ff6b9d, #d6336c); color: #fff; border: none;
+              box-shadow: 0 3px 10px rgba(214,51,108,.3); }
+  .note { text-align: center; color: #a06a85; font-size: .8em; margin: 20px 10px 0; line-height: 1.6; }
+  footer { text-align: center; color: #c49aad; font-size: .75em; margin-top: 26px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="img/mimi-avatar-tienda.png" alt="Mimi the Kitty">
+    <h1>🐱 Tienda de Mimi the Kitty</h1>
+    <div class="sub">Ropa y accesorios tiernos para pequeños fans 💖<br>Toca un producto para comprarlo</div>
+  </header>
+  <div class="grid" id="grid"></div>
+  <div class="note">🔒 El pago y el envío los maneja <b>Redbubble</b> de forma segura.<br>Si un producto no aparece, escríbenos y lo agregamos 💌</div>
+  <footer>Mimi the Kitty © 2026 · Hecho con 💖 para pequeños fans</footer>
+</div>
+<script>
+"use strict";
+const EMOJI = { "Camiseta":"👕", "Gorra":"🧢", "Taza":"☕", "Pegatina":"⭐", "Sudadera":"🧥" };
+const DESIGNS = [
+  { title:"Mimi the Kitty Star Face", img:"img/sticker-carita.png", tag:"⭐ El favorito",
+    items:[
+      ["Camiseta","https://www.redbubble.com/es/i/camiseta/Mimi-the-Kitty-Star-Face-Cute-Kids-Design-de-mimithekitty/184438650/lrcw"],
+      ["Gorra","https://www.redbubble.com/es/i/gorra/Mimi-the-Kitty-Star-Face-Cute-Kids-Design-de-mimithekitty/184438650/fce2"],
+      ["Taza","https://www.redbubble.com/es/i/taza/Mimi-the-Kitty-Star-Face-Cute-Kids-Design-de-mimithekitty/184438650/7yqg"],
+      ["Pegatina","https://www.redbubble.com/es/i/pegatina/Mimi-the-Kitty-Star-Face-Cute-Kids-Design-de-mimithekitty/184438650/7sgk"],
+      ["Sudadera","https://www.redbubble.com/es/i/sudadera/Mimi-the-Kitty-Star-Face-Cute-Kids-Design-de-mimithekitty/184438650/du6s"] ],
+    all:"https://www.redbubble.com/es/shop/ap/184438650" },
+  { title:"Mimi the Kitty Waving Hello", img:"img/sticker-saludo.png", tag:"👋 El saludo de Mimi",
+    items:[
+      ["Camiseta","https://www.redbubble.com/es/i/camiseta/Mimi-the-Kitty-Waving-Hello-Cute-Kawaii-Kitten-de-mimithekitty/184438565/lrcw"],
+      ["Gorra","https://www.redbubble.com/es/i/gorra/Mimi-the-Kitty-Waving-Hello-Cute-Kawaii-Kitten-de-mimithekitty/184438565/fce2"],
+      ["Taza","https://www.redbubble.com/es/i/taza/Mimi-the-Kitty-Waving-Hello-Cute-Kawaii-Kitten-de-mimithekitty/184438565/7yqg"],
+      ["Pegatina","https://www.redbubble.com/es/i/pegatina/Mimi-the-Kitty-Waving-Hello-Cute-Kawaii-Kitten-de-mimithekitty/184438565/7sgk"],
+      ["Sudadera","https://www.redbubble.com/es/i/sudadera/Mimi-the-Kitty-Waving-Hello-Cute-Kawaii-Kitten-de-mimithekitty/184438565/du6s"] ],
+    all:"https://www.redbubble.com/es/shop/ap/184438565" },
+  { title:"Mimi the Kitty Hugging Heart", img:"img/sticker-corazon.png", tag:"💖 Con amor",
+    items:[
+      ["Camiseta","https://www.redbubble.com/es/i/camiseta/Mimi-the-Kitty-Hugging-Heart-Cute-Kawaii-Cat-de-mimithekitty/184438611/lrcw"],
+      ["Gorra","https://www.redbubble.com/es/i/gorra/Mimi-the-Kitty-Hugging-Heart-Cute-Kawaii-Cat-de-mimithekitty/184438611/fce2"],
+      ["Taza","https://www.redbubble.com/es/i/taza/Mimi-the-Kitty-Hugging-Heart-Cute-Kawaii-Cat-de-mimithekitty/184438611/7yqg"],
+      ["Pegatina","https://www.redbubble.com/es/i/pegatina/Mimi-the-Kitty-Hugging-Heart-Cute-Kawaii-Cat-de-mimithekitty/184438611/7sgk"],
+      ["Sudadera","https://www.redbubble.com/es/i/sudadera/Mimi-the-Kitty-Hugging-Heart-Cute-Kawaii-Cat-de-mimithekitty/184438611/du6s"] ],
+    all:"https://www.redbubble.com/es/shop/ap/184438611" },
+  { title:"Mimi the Kitty Pink Pattern", img:"img/mochila-patron.png", tag:"🎒 Patrón kawaii",
+    items:[
+      ["Camiseta","https://www.redbubble.com/es/i/camiseta/Mimi-the-Kitty-Pink-Pattern-Kawaii-Cat-Backpack-de-mimithekitty/184438724/lrcw"],
+      ["Gorra","https://www.redbubble.com/es/i/gorra/Mimi-the-Kitty-Pink-Pattern-Kawaii-Cat-Backpack-de-mimithekitty/184438724/fce2"],
+      ["Taza","https://www.redbubble.com/es/i/taza/Mimi-the-Kitty-Pink-Pattern-Kawaii-Cat-Backpack-de-mimithekitty/184438724/7yqg"],
+      ["Pegatina","https://www.redbubble.com/es/i/pegatina/Mimi-the-Kitty-Pink-Pattern-Kawaii-Cat-Backpack-de-mimithekitty/184438724/7sgk"],
+      ["Sudadera","https://www.redbubble.com/es/i/sudadera/Mimi-the-Kitty-Pink-Pattern-Kawaii-Cat-Backpack-de-mimithekitty/184438724/du6s"] ],
+    all:"https://www.redbubble.com/es/shop/ap/184438724" },
+  { title:"Mimi the Kitty Kawaii Face", img:"img/diseno-4.png", tag:"😻 Carita kawaii",
+    items:[
+      ["Camiseta","https://www.redbubble.com/es/i/camiseta/Mimi-the-Kitty-Kawaii-Face-de-mimithekitty/184383918/lrcw"],
+      ["Taza","https://www.redbubble.com/es/i/taza/Mimi-the-Kitty-Kawaii-Face-de-mimithekitty/184383918/7yqg"],
+      ["Pegatina","https://www.redbubble.com/es/i/pegatina/Mimi-the-Kitty-Kawaii-Face-de-mimithekitty/184383918/7sgk"],
+      ["Sudadera","https://www.redbubble.com/es/i/sudadera/Mimi-the-Kitty-Kawaii-Face-de-mimithekitty/184383918/du6s"] ],
+    all:"https://www.redbubble.com/es/shop/ap/184383918" },
+  { title:"Mimi the Kitty Rainbow Jump", img:"img/diseno-2.png", tag:"🌈 Arcoíris",
+    items:[
+      ["Taza","https://www.redbubble.com/es/i/taza/Mimi-the-Kitty-Rainbow-Jump-de-mimithekitty/184383885/7yqg"],
+      ["Pegatina","https://www.redbubble.com/es/i/pegatina/Mimi-the-Kitty-Rainbow-Jump-de-mimithekitty/184383885/7sgk"] ],
+    all:"https://www.redbubble.com/es/shop/ap/184383885" },
+  { title:"A is for Apple — Mimi ABC", img:"img/diseno-3.png", tag:"🔤 Aprende el ABC",
+    items:[
+      ["Taza","https://www.redbubble.com/es/i/taza/A-is-for-Apple-Mimi-the-Kitty-ABC-de-mimithekitty/184383904/7yqg"],
+      ["Pegatina","https://www.redbubble.com/es/i/pegatina/A-is-for-Apple-Mimi-the-Kitty-ABC-de-mimithekitty/184383904/7sgk"] ],
+    all:"https://www.redbubble.com/es/shop/ap/184383904" },
+  { title:"Dance with Mimi the Kitty", img:"img/diseno-5.png", tag:"💃 A bailar",
+    items:[
+      ["Taza","https://www.redbubble.com/es/i/taza/Dance-with-Mimi-the-Kitty-de-mimithekitty/184383935/7yqg"],
+      ["Pegatina","https://www.redbubble.com/es/i/pegatina/Dance-with-Mimi-the-Kitty-de-mimithekitty/184383935/7sgk"] ],
+    all:"https://www.redbubble.com/es/shop/ap/184383935" },
+];
+const grid = document.getElementById("grid");
+grid.innerHTML = DESIGNS.map(d => `
+  <div class="card">
+    <div class="imgbox"><img class="art" src="${d.img}" alt="${d.title}" loading="lazy"></div>
+    <div class="body">
+      ${d.tag ? `<span class="tag">${d.tag}</span>` : ""}
+      <h2>${d.title}</h2>
+      ${d.items.map(([name,url]) => `<a class="buy" href="${url}" target="_blank" rel="noopener">${EMOJI[name]||"🛍️"} ${name}</a>`).join("")}
+      <a class="buy main" href="${d.all}" target="_blank" rel="noopener">🛒 Ver todos los productos</a>
+    </div>
+  </div>`).join("");
+</script>
+</body>
+</html>
