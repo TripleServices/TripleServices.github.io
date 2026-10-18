@@ -102,7 +102,9 @@
       <summary>ℹ️ ¿Cómo funciona?</summary>
       <div class="mini" style="margin-top:8px">
         El programa combina categorías (animales, comidas, lugares, travesuras, bailes, emociones…) en millones de
-        temas únicos. Cada tema generado se registra con una clave única; si ya se usó, se descarta y se genera otro.
+        temas únicos. El tipo <b>📺🌙 Cuento largo YouTube (5 min)</b> arma cuentos para dormir largos con Mimi &amp; Coco,
+        en 3 partes tranquilas y final dormido, pensados para el canal de YouTube.
+        Cada tema generado se registra con una clave única; si ya se usó, se descarta y se genera otro.
         Los temas ya publicados de Mimi (letras A–F, cortos, canciones, palabras del día…) vienen precargados como usados.
         Con la llave de Gemini, la IA propone temas frescos y también se filtran contra esta lista.
       </div>
@@ -125,6 +127,10 @@ const OCCASIONS = ["sunny morning","rainy day","snowy day","beach day","birthday
 const MISCHIEFS = ["eats it all up","sits on it","pops it","chases it around","hugs it too hard","loses it","breaks it while dancing","wears it as a hat","shares it with a friend","hides inside it","paints it rainbow","sings to it","tickles it","races it","naps on it","tries to feed it","gives it a bath","flies away with it","bounces on it","gets tangled in it","waters it like a plant","builds a tower with it","invites friends to see it","trades it for a giggle","makes a wish on it"];
 const MAGICALS = ["magic wand","golden key","starry cape","rainbow boots","talking mirror","flying carpet","bubble machine","music box","candy compass","dream pillow","giggle potion","sunny lantern","moon balloon","treasure map","crystal bell","fluffy cloud","wishing star","rainbow paint","tickle feather","sleepy dust"];
 const LESSONS = ["sharing is caring","be kind to everyone","never give up","say thank you","help your friends","be brave","clean up your toys","eat your veggies","bedtime is cozy","say sorry with a hug"];
+const BEDTIME_SETTINGS = ["moonlit garden","sleepy forest","quiet beach under the stars","cloud kingdom","starry meadow","cozy treehouse","lighthouse by the sea","lavender field","snowy little village","rainbow riverbank","firefly hollow","dreamy island","sleepy farm","moonlit lake","whispering pine woods","cozy burrow","starlight castle garden","sleepy train ride"];
+const BEDTIME_FRIENDS = ["a baby owl","a tiny firefly","a sleepy turtle","a baby deer","a little hedgehog","a baby penguin","a baby lamb","a tiny bunny","a baby fox","a sleepy bear cub","a baby seal","a little mouse"];
+const BEDTIME_MAGIC = ["moon lantern","silver dream key","whispering wishing star","singing seashell","jar of glowing fireflies","moonlight blanket","pouch of star dust","sleepy music box","rainbow moonbeam","talking moon","feather of the night bird","glowing dream flower"];
+const BEDTIME_JOURNEYS = ["follow the fireflies back home","return a lost baby star to the sky","help the moon find its lost light","carry a sleepy friend safely home","find the quietest corner of the forest","deliver a goodnight letter to the stars","follow a trail of moon petals","cross the rainbow bridge very slowly","sail a paper boat down the moon river","climb the cloud stairs to say goodnight to the moon","gather lullabies from the night animals","light every lantern along the sleepy path"];
 const VEHICLES = ["rocket","pirate ship","hot air balloon","train","submarine","magic carpet","bicycle","scooter","boat","airplane","tractor","fire truck","school bus","canoe","roller skates"];
 const UTENSILS = ["big pot","silly pan","wooden spoon","mixing bowl","teacup","mixer","oven mitt","apron","whisk","rolling pin","cookie cutter","plate","teapot","blender","lunchbox"];
 const SITUATIONS = ["slips and slides","gets stuck","pops like popcorn","grows super big","shrinks super small","dances away","makes a huge splash","flies like a balloon","multiplies by ten","turns rainbow colors","sings opera","does somersaults","runs in circles","bounces like a ball","melts like ice cream","floats to the sky","starts a parade","giggles nonstop","spins like a top","tickles everyone"];
@@ -162,6 +168,9 @@ const FORMATS = [
   { id:"story", name:"🌙 Cuento para dormir", slots:()=>[r(CHARACTERS), r(PLACES), r(MAGICALS), r(LESSONS)],
     title:v=>`Mimi and the ${cap(v[2])}`,
     concept:v=>`Bedtime story: Mimi and her ${v[0]} find a ${v[2]} in the ${v[1]}. Gentle lesson: ${v[3]}.` },
+  { id:"bedtime5", name:"📺🌙 Cuento largo YouTube (5 min)", slots:()=>[r(BEDTIME_SETTINGS), r(BEDTIME_FRIENDS), r(BEDTIME_MAGIC), r(BEDTIME_JOURNEYS), r(LESSONS)],
+    title:v=>`Mimi & Coco and the ${cap(v[2])} | Bedtime Story`,
+    concept:v=>`LONG bedtime story for YouTube (5 minutes, calm narration + soft piano, 3 gentle parts): 1) Mimi & Coco settle in at the ${v[0]} and meet ${v[1]}. 2) A slow, dreamy journey: they ${v[3]} with the help of the ${v[2]}. 3) Back home, tucked in bed under the moonlight. Gentle lesson: ${v[4]}. Slow pace, sleepy ending — perfect for bedtime.` },
   { id:"adventure", name:"🗺️ Aventura", slots:()=>[r(VEHICLES), r(PLACES), r(ANIMALS)],
     title:v=>`Mimi's ${cap(v[0])} Adventure!`,
     concept:v=>`Mimi rides a ${v[0]} to the ${v[1]} and meets a friendly ${v[2]}. Discover, play, sing!` },
@@ -249,6 +258,7 @@ function poolSize(){
   n += 20*NOUNS.length*PLACES.length;
   n += COLORS.length*NOUNS.length;
   n += CHARACTERS.length*PLACES.length*MAGICALS.length*LESSONS.length;
+  n += BEDTIME_SETTINGS.length*BEDTIME_FRIENDS.length*BEDTIME_MAGIC.length*BEDTIME_JOURNEYS.length*LESSONS.length;
   n += VEHICLES.length*PLACES.length*ANIMALS.length;
   n += FOODS.length*UTENSILS.length*SITUATIONS.length;
   n += ANIMALS.length*FACTS.length;
@@ -344,7 +354,7 @@ $("btn-ai").onclick = async () => {
   if(!key){ box.innerHTML = `<span class="err">Pega primero tu llave gratuita de ai.google.dev</span>`; return; }
   box.textContent = "🤖 Pidiendo temas a la IA…"; out.innerHTML = "";
   const usedList = [...used].slice(-120).join(", ");
-  const prompt = `Generate 10 unique, super fun video topic ideas for "Mimi the Kitty", a 3D cartoon white kitten channel for preschool kids (ages 2-5). Mix formats: original song, funny short, word of the day, dance challenge, bedtime story, counting, colors, animal facts, emotions. Already used (NEVER repeat these or anything similar): ${usedList}. Return ONLY a JSON array, no other text: [{"title":"catchy English title, max 8 words","format":"song|short|word|dance|story|numbers|colors|animal|emotion","concept":"one line English concept"}]`;
+  const prompt = `Generate 10 unique, super fun video topic ideas for "Mimi the Kitty", a 3D cartoon white kitten channel for preschool kids (ages 2-5). Mix formats: original song, funny short, word of the day, dance challenge, bedtime story, counting, colors, animal facts, emotions, and LONG bedtime stories for YouTube (format "bedtime5": 5 minutes, calm narration, Mimi & Coco, 3 gentle parts and a sleepy ending). Already used (NEVER repeat these or anything similar): ${usedList}. Return ONLY a JSON array, no other text: [{"title":"catchy English title, max 8 words","format":"song|short|word|dance|story|bedtime5|numbers|colors|animal|emotion","concept":"one line English concept"}]`;
   try{
     const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key="+encodeURIComponent(key),{
       method:"POST", headers:{"Content-Type":"application/json"},
