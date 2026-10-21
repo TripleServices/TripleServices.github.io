@@ -104,6 +104,8 @@
         El programa combina categorías (animales, comidas, lugares, travesuras, bailes, emociones…) en millones de
         temas únicos. El tipo <b>📺🌙 Cuento largo YouTube (5 min)</b> arma cuentos para dormir largos con Mimi &amp; Coco,
         en 3 partes tranquilas y final dormido, pensados para el canal de YouTube.
+        El tipo <b>🎬 MimiNovela</b> arma microdramas con diálogos de Mimi &amp; Coco (~8 escenas):
+        conflicto o secreto, giro sorpresa y final dulce con moraleja, listos para producir en Flow.
         Cada tema generado se registra con una clave única; si ya se usó, se descarta y se genera otro.
         Los temas ya publicados de Mimi (letras A–F, cortos, canciones, palabras del día…) vienen precargados como usados.
         Con la llave de Gemini, la IA propone temas frescos y también se filtran contra esta lista.
@@ -131,6 +133,20 @@ const BEDTIME_SETTINGS = ["moonlit garden","sleepy forest","quiet beach under th
 const BEDTIME_FRIENDS = ["a baby owl","a tiny firefly","a sleepy turtle","a baby deer","a little hedgehog","a baby penguin","a baby lamb","a tiny bunny","a baby fox","a sleepy bear cub","a baby seal","a little mouse"];
 const BEDTIME_MAGIC = ["moon lantern","silver dream key","whispering wishing star","singing seashell","jar of glowing fireflies","moonlight blanket","pouch of star dust","sleepy music box","rainbow moonbeam","talking moon","feather of the night bird","glowing dream flower"];
 const BEDTIME_JOURNEYS = ["follow the fireflies back home","return a lost baby star to the sky","help the moon find its lost light","carry a sleepy friend safely home","find the quietest corner of the forest","deliver a goodnight letter to the stars","follow a trail of moon petals","cross the rainbow bridge very slowly","sail a paper boat down the moon river","climb the cloud stairs to say goodnight to the moon","gather lullabies from the night animals","light every lantern along the sleepy path"];
+const NOVELA_PREMISES = [
+  { slug:"regalo-escondido", title:"Mimi and the Hidden Gift", arc:"Coco esconde una caja misteriosa y no quiere jugar; Mimi se pone triste pensando que ya no la quiere. Giro sorpresa: al atardecer Coco abre la caja — una lamparita de estrella que hizo para su mesita de noche. Final dulce: la miran brillar abrazados. Moraleja: los amigos de verdad preparan sorpresas en silencio." },
+  { slug:"amigo-misterioso", title:"Mimi and the Mysterious Friend", arc:"Una sombra sigue a Mimi por el jardín y ella corre asustada creyendo que es un monstruo. Giro sorpresa: es un perrito perdido con una nota en el collar, buscando a su familia. Final dulce: Mimi y Coco lo ayudan a volver a casa. Moraleja: no juzgues por la sombra; conoce primero." },
+  { slug:"carta-perdida", title:"Mimi and the Lost Letter", arc:"Mimi escribe una carta de gracias a la abuela y el viento se la lleva; ella culpa a Coco por jugar con los papeles. Giro sorpresa: Coco persiguió la carta por todo el jardín y la guardó a salvo en su lata de galletas. Final dulce: la echan al buzón juntos, con un dibujo. Moraleja: antes de culpar, pregunta qué pasó." },
+  { slug:"ruido-en-la-noche", title:"Mimi and the Strange Noise", arc:"Cada noche un 'toc toc' bajo su ventana asusta a Mimi y Coco no le cree. Giro sorpresa: es un búho bebé que cayó del nido y pide ayuda. Final dulce: lo suben a su casa con una escalera de almohadas. Moraleja: los miedos se hacen chiquitos cuando se miran en compañía." },
+  { slug:"cumpleanos-sorpresa", title:"Mimi and the Surprise Birthday", arc:"Todos susurran y se esconden cuando Mimi llega; ella se entristece creyendo que olvidaron su cumpleaños. Giro sorpresa: ¡se encienden las luces y hay fiesta, con un pastel más grande que ella! Final dulce: sopla las velitas abrazando a Coco. Moraleja: lo más dulce llega a su momento." },
+  { slug:"mapa-del-tesoro", title:"Mimi and the Treasure Map", arc:"Mimi encuentra un mapa viejo y sale sola tras el tesoro; Coco la sigue en secreto para cuidarla. Giro sorpresa: la X marca una manta de picnic bajo el árbol arcoíris, el rincón favorito del abuelo. Final dulce: picnic juntos al atardecer. Moraleja: el tesoro de verdad es quien camina contigo." },
+  { slug:"receta-secreta", title:"Mimi and the Secret Recipe", arc:"Coco cuida un libro de recetas y no se lo enseña a nadie; Mimi se siente fuera e intenta adivinar la receta, armando un desastre divertido. Giro sorpresa: Coco estaba horneando SUS galletas favoritas, sorpresa para su fiesta de té. Final dulce: hornean juntos una segunda tanda. Moraleja: los secretos de cariño se revelan a su tiempo." },
+  { slug:"visitante-inesperado", title:"Mimi and the Unexpected Visitor", arc:"Un erizo bebé con maleta se muda a la casa de al lado, pero es tan tímido que no saluda; Mimi cree que es un gruñón. Giro sorpresa: traía flores para presentarse y los nervios no lo dejaban. Final dulce: fiesta de bienvenida en el jardín. Moraleja: la timidez no es mala educación; dale tiempo a los amigos nuevos." },
+  { slug:"cometa-que-vuela", title:"Mimi and the Runaway Kite", arc:"La cometa nueva de Mimi se escapa volando y ella piensa que Coco la soltó a propósito. Giro sorpresa: Coco corrió tras ella y la rescató de la copa del árbol, todo enredado en cintas. Final dulce: la vuelan juntos al atardecer. Moraleja: el silencio de un amigo puede ser esfuerzo, no indiferencia." },
+  { slug:"caja-de-musica", title:"Mimi and the Music Box", arc:"Una caja de música toca una canción que Mimi nunca oyó y ella cree que Coco tiene una amiga nueva que canta más bonito. Giro sorpresa: la caja era un regalo de la abuela, con una canción de cuna grabada 'para Mimi'. Final dulce: bailan la nana juntos, despacito. Moraleja: los celos se derriten cuando escuchas la canción completa." },
+  { slug:"huellas-misteriosas", title:"Mimi and the Giant Footprints", arc:"Unas huellas gigantes cruzan el jardín y Mimi sospecha de un monstruo; Coco se ríe y ella se molesta. Giro sorpresa: es un elefante bebé del circo viajero, perdido y asustado. Final dulce: lo guían de vuelta con un camino de bananas. Moraleja: detrás de un misterio que asusta puede haber alguien que necesita ayuda." },
+  { slug:"picnic-bajo-la-lluvia", title:"Mimi and the Rainy Day Picnic", arc:"La lluvia arruina el picnic y Mimi se entristece; Coco desaparece en el garaje y no dice para qué. Giro sorpresa: armó un picnic dentro de casa, con mantas, linternas y un sol de papel. Final dulce: el mejor picnic de todos, bajo techo. Moraleja: los planes cambian; el cariño, no." },
+];
 const VEHICLES = ["rocket","pirate ship","hot air balloon","train","submarine","magic carpet","bicycle","scooter","boat","airplane","tractor","fire truck","school bus","canoe","roller skates"];
 const UTENSILS = ["big pot","silly pan","wooden spoon","mixing bowl","teacup","mixer","oven mitt","apron","whisk","rolling pin","cookie cutter","plate","teapot","blender","lunchbox"];
 const SITUATIONS = ["slips and slides","gets stuck","pops like popcorn","grows super big","shrinks super small","dances away","makes a huge splash","flies like a balloon","multiplies by ten","turns rainbow colors","sings opera","does somersaults","runs in circles","bounces like a ball","melts like ice cream","floats to the sky","starts a parade","giggles nonstop","spins like a top","tickles everyone"];
@@ -171,6 +187,10 @@ const FORMATS = [
   { id:"bedtime5", name:"📺🌙 Cuento largo YouTube (5 min)", slots:()=>[r(BEDTIME_SETTINGS), r(BEDTIME_FRIENDS), r(BEDTIME_MAGIC), r(BEDTIME_JOURNEYS), r(LESSONS)],
     title:v=>`Mimi & Coco and the ${cap(v[2])} | Bedtime Story`,
     concept:v=>`LONG bedtime story for YouTube (5 minutes, calm narration + soft piano, 3 gentle parts): 1) Mimi & Coco settle in at the ${v[0]} and meet ${v[1]}. 2) A slow, dreamy journey: they ${v[3]} with the help of the ${v[2]}. 3) Back home, tucked in bed under the moonlight. Gentle lesson: ${v[4]}. Slow pace, sleepy ending — perfect for bedtime.` },
+  { id:"miminovela", name:"🎬 MimiNovela", slots:()=>[r(NOVELA_PREMISES).slug],
+    title:v=>NOVELA_PREMISES.find(p=>p.slug===v[0]).title,
+    concept:v=>{ const p = NOVELA_PREMISES.find(x=>x.slug===v[0]);
+      return `MimiNovela 🎬 microdrama con diálogos (~8 escenas, Mimi & Coco): ${p.arc} 📦 Lista para producir: viene lista para armar el paquete de Flow (una imagen + un prompt de video por escena).`; } },
   { id:"adventure", name:"🗺️ Aventura", slots:()=>[r(VEHICLES), r(PLACES), r(ANIMALS)],
     title:v=>`Mimi's ${cap(v[0])} Adventure!`,
     concept:v=>`Mimi rides a ${v[0]} to the ${v[1]} and meets a friendly ${v[2]}. Discover, play, sing!` },
@@ -259,6 +279,7 @@ function poolSize(){
   n += COLORS.length*NOUNS.length;
   n += CHARACTERS.length*PLACES.length*MAGICALS.length*LESSONS.length;
   n += BEDTIME_SETTINGS.length*BEDTIME_FRIENDS.length*BEDTIME_MAGIC.length*BEDTIME_JOURNEYS.length*LESSONS.length;
+  n += NOVELA_PREMISES.length;
   n += VEHICLES.length*PLACES.length*ANIMALS.length;
   n += FOODS.length*UTENSILS.length*SITUATIONS.length;
   n += ANIMALS.length*FACTS.length;
@@ -354,7 +375,7 @@ $("btn-ai").onclick = async () => {
   if(!key){ box.innerHTML = `<span class="err">Pega primero tu llave gratuita de ai.google.dev</span>`; return; }
   box.textContent = "🤖 Pidiendo temas a la IA…"; out.innerHTML = "";
   const usedList = [...used].slice(-120).join(", ");
-  const prompt = `Generate 10 unique, super fun video topic ideas for "Mimi the Kitty", a 3D cartoon white kitten channel for preschool kids (ages 2-5). Mix formats: original song, funny short, word of the day, dance challenge, bedtime story, counting, colors, animal facts, emotions, and LONG bedtime stories for YouTube (format "bedtime5": 5 minutes, calm narration, Mimi & Coco, 3 gentle parts and a sleepy ending). Already used (NEVER repeat these or anything similar): ${usedList}. Return ONLY a JSON array, no other text: [{"title":"catchy English title, max 8 words","format":"song|short|word|dance|story|bedtime5|numbers|colors|animal|emotion","concept":"one line English concept"}]`;
+  const prompt = `Generate 10 unique, super fun video topic ideas for "Mimi the Kitty", a 3D cartoon white kitten channel for preschool kids (ages 2-5). Mix formats: original song, funny short, word of the day, dance challenge, bedtime story, counting, colors, animal facts, emotions, LONG bedtime stories for YouTube (format "bedtime5": 5 minutes, calm narration, Mimi & Coco, 3 gentle parts and a sleepy ending), and MimiNovelas (format "miminovela": a dialogue microdrama with Mimi & Coco, ~8 scenes — a conflict or secret, a surprise twist and a sweet ending with a moral, produced scene by scene in Flow). Already used (NEVER repeat these or anything similar): ${usedList}. Return ONLY a JSON array, no other text: [{"title":"catchy English title, max 8 words","format":"song|short|word|dance|story|bedtime5|miminovela|numbers|colors|animal|emotion","concept":"one line English concept"}]`;
   try{
     const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key="+encodeURIComponent(key),{
       method:"POST", headers:{"Content-Type":"application/json"},
